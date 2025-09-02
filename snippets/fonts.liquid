@@ -19,7 +19,7 @@
     fetchpriority="low"
   >
 {%- endunless -%}
-{%- unless settings.type_heading_font.system? -%}
+{%- unless settings.type_heading_font.system? and miles == true -%}
   <link
     rel="preload"
     as="font"
@@ -39,4 +39,12 @@
     fetchpriority="low"
   >
 {%- endunless -%}
+
+<link
+  rel="preload"
+  as="font"
+  href="{{ "miles-webfont.woff2" | asset_url | pre }}"
+  type="font/woff2"
+  crossorigin
+>
 {% # theme-check-enable %}

@@ -8,6 +8,19 @@
     if block_settings.media_type_1 == 'video'
       assign preview_image = block_settings.video_1.preview_image
     endif
+
+    # Mobile media handling
+    assign mobile_preview_image = null
+    assign use_mobile_media = false
+
+    if block_settings.mobile_media_type != 'same'
+      assign use_mobile_media = true
+      if block_settings.mobile_media_type == 'image'
+        assign mobile_preview_image = block_settings.mobile_image
+      elsif block_settings.mobile_media_type == 'video'
+        assign mobile_preview_image = block_settings.mobile_video.preview_image
+      endif
+    endif
   %}
   {% if section.settings.slide_height == 'adapt_image' and block_index == 0 and preview_image != blank %}
     {%
@@ -50,31 +63,87 @@
         endif
       -%}
 
-      {%- if block_settings.media_type_1 == 'image' -%}
-        {{
-          block_settings.image_1
-          | image_url: width: 3840
-          | image_tag: height: height, sizes: sizes, widths: widths, class: 'slide__image', loading: loading, fetchpriority: fetchpriority
-        }}
-      {%- else -%}
-        {%- if block_settings.video_1.preview_image -%}
+      {%- if use_mobile_media -%}
+        {%- comment -%} Desktop media {%- endcomment -%}
+          {%- if block_settings.media_type_1 == 'image' -%}
+            {{
+              block_settings.image_1
+              | image_url: width: 3840
+              | image_tag: height: height, sizes: sizes, widths: widths, class: 'slide__image slide__media--desktop mobile:hidden', loading: loading, fetchpriority: fetchpriority
+            }}
+          {%- else -%}
+            {%- if block_settings.video_1.preview_image -%}
+              {{
+                block_settings.video_1.preview_image
+                | image_url: width: 3840
+                | image_tag:
+                  height: height,
+                  sizes: sizes,
+                  widths: widths,
+                  loading: loading,
+                  class: 'slide__video-poster slide__media--desktop mobile:hidden',
+                  fetchpriority: fetchpriority
+              }}
+            {%- endif -%}
+            {{
+              block_settings.video_1
+              | video_tag: poster: nil, autoplay: true, loop: true, controls: false, muted: true, class: 'slide__video'
+            }}
+          {%- endif -%}
 
+        {%- comment -%} Mobile media {%- endcomment -%}
+          {%- if block_settings.mobile_media_type == 'image' -%}
+            {{
+              block_settings.mobile_image
+              | image_url: width: 3840
+              | image_tag: height: height, sizes: sizes, widths: widths, class: 'slide__image slide__media--mobile desktop:hidden', loading: loading, fetchpriority: fetchpriority
+            }}
+          {%- else -%}
+            {%- if block_settings.mobile_video.preview_image -%}
+              {{
+                block_settings.mobile_video.preview_image
+                | image_url: width: 3840
+                | image_tag:
+                  height: height,
+                  sizes: sizes,
+                  widths: widths,
+                  loading: loading,
+                  class: 'slide__video-poster',
+                  fetchpriority: fetchpriority
+              }}
+            {%- endif -%}
+            {{
+              block_settings.mobile_video
+              | video_tag: poster: nil, autoplay: true, loop: true, controls: false, muted: true, class: 'slide__video'
+            }}
+          {%- endif -%}
+      {%- else -%}
+        {%- comment -%} Same media for both desktop and mobile {%- endcomment -%}
+        {%- if block_settings.media_type_1 == 'image' -%}
           {{
-            block_settings.video_1.preview_image
+            block_settings.image_1
             | image_url: width: 3840
-            | image_tag:
-              height: height,
-              sizes: sizes,
-              widths: widths,
-              loading: loading,
-              class: 'slide__video-poster',
-              fetchpriority: fetchpriority
+            | image_tag: height: height, sizes: sizes, widths: widths, class: 'slide__image', loading: loading, fetchpriority: fetchpriority
+          }}
+        {%- else -%}
+          {%- if block_settings.video_1.preview_image -%}
+            {{
+              block_settings.video_1.preview_image
+              | image_url: width: 3840
+              | image_tag:
+                height: height,
+                sizes: sizes,
+                widths: widths,
+                loading: loading,
+                class: 'slide__video-poster',
+                fetchpriority: fetchpriority
+            }}
+          {%- endif -%}
+          {{
+            block_settings.video_1
+            | video_tag: poster: nil, autoplay: true, loop: true, controls: false, muted: true, class: 'slide__video'
           }}
         {%- endif -%}
-        {{
-          block_settings.video_1
-          | video_tag: poster: nil, autoplay: true, loop: true, controls: false, muted: true, class: 'slide__video'
-        }}
       {%- endif -%}
     {%- else -%}
       {%- liquid
@@ -86,7 +155,7 @@
     {%- endif -%}
   </div>
   <div
-    class="spacing-style slide__content{% if block_settings.inherit_color_scheme == false %} color-{{ block_settings.color_scheme }}{% endif %}{% if preview_image or block_settings.toggle_overlay %} background-transparent{% endif %}"
+    class="spacing-style slide__content{% if block_settings.inherit_color_scheme == false %} color-{{ block_settings.color_scheme }}{% endif %}{% if preview_image or block_settings.toggle_overlay %} background-transparent{% endif %} slide__content--mobile-align-{{ block_settings.mobile_alignment }} slide__content--mobile-position-{{ block_settings.mobile_position }}"
     style="{% render 'spacing-style', settings: block_settings %}"
     {{ block.shopify_attributes }}
   >
@@ -97,6 +166,11 @@
       {% if block_settings.vertical_on_mobile %}mobile-column{% endif %}"
       style="{% render 'layout-panel-style', settings: block_settings %}"
     >
+    <script>
+      console.log({
+        'block_settings': {{ block_settings | json }},
+      });
+    </script>
       {% content_for 'blocks' %}
     </div>
   </div>
@@ -156,6 +230,44 @@
   .slide__image-container > .slide__video-poster {
     position: absolute;
   }
+
+  /* Mobile alignment and position */
+  @media screen and (max-width: 749px) {
+    /* Mobile alignment */
+    .slide__content--mobile-align-left .group-block-content {
+      align-items: flex-start;
+      text-align: left;
+    }
+
+    .slide__content--mobile-align-center .group-block-content {
+      align-items: center;
+      text-align: center;
+    }
+
+    .slide__content--mobile-align-right .group-block-content {
+      align-items: flex-end;
+      text-align: right;
+    }
+
+    /* Mobile position */
+    .slide__content--mobile-position-top {
+      justify-content: flex-start;
+    }
+
+    .slide__content--mobile-position-center {
+      justify-content: center;
+    }
+
+    .slide__content--mobile-position-bottom {
+      justify-content: flex-end;
+    }
+
+    .slide__content--mobile-position-top .group-block-content,
+    .slide__content--mobile-position-center .group-block-content,
+    .slide__content--mobile-position-bottom .group-block-content {
+      margin: 0;
+    }
+  }
 {% endstylesheet %}
 
 {% schema %}
@@ -198,6 +310,89 @@
       "id": "video_1",
       "label": "t:settings.video",
       "visible_if": "{{ block.settings.media_type_1 == 'video' }}"
+    },
+    {
+      "type": "header",
+      "content": "Mobile"
+    },
+    {
+      "type": "select",
+      "id": "mobile_media_type",
+      "label": "Mobile media type",
+      "options": [
+        {
+          "value": "same",
+          "label": "Same as desktop"
+        },
+        {
+          "value": "image",
+          "label": "Image"
+        },
+        {
+          "value": "video",
+          "label": "Video"
+        }
+      ],
+      "default": "same"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile image",
+      "visible_if": "{{ block.settings.mobile_media_type == 'image' }}"
+    },
+    {
+      "type": "video",
+      "id": "mobile_video",
+      "label": "Mobile video",
+      "visible_if": "{{ block.settings.mobile_media_type == 'video' }}"
+    },
+    
+    {
+      "type": "select",
+      "id": "horizontal_alignment_mobile",
+      "label": "t:settings.horizontal_alignment_mobile",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "t:options.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.center"
+        },
+        {
+          "value": "flex-end",
+          "label": "t:options.right"
+        },
+        {
+          "value": "space-between",
+          "label": "t:options.space_between"
+        }
+      ],
+      "default": "flex-start",
+      "visible_if": "{{ section.settings.content_direction == 'row' }}"
+    },
+    {
+      "type": "select",
+      "id": "vertical_alignment_mobile",
+      "label": "t:settings.vertical_alignment_mobile",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "t:options.top"
+        },
+        {
+          "value": "center",
+          "label": "t:options.center"
+        },
+        {
+          "value": "flex-end",
+          "label": "t:options.bottom"
+        }
+      ],
+      "default": "center",
+      "visible_if": "{{ section.settings.content_direction == 'row' }}"
     },
     {
       "type": "header",

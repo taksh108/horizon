@@ -5,6 +5,7 @@
   @param {string} [alignment] - The alignment of the text. Defaults to the block's alignment setting.
   @param {string} [author] - The author name. Defaults to article.author, placeholder text for onboarding
   @param {string} [date] - The published date. Defaults to article.published_at, placeholder text for onboarding
+  @param {number} [comments_count] - The published comments count on the article.
 {%- enddoc -%}
 
 {% assign block_settings = block.settings %}
@@ -32,6 +33,9 @@
 
     {%- if block_settings.show_author -%}
       <span>{{ display_author }}</span>
+    {%- endif -%}
+    {%- if comments_count > 0 -%}
+      <span>{{- 'blogs.article.comments_heading' | t: count: comments_count -}}</span>
     {%- endif -%}
   </div>
 {% endif %}

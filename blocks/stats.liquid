@@ -1,0 +1,319 @@
+{% doc %}
+  Statistics display block showing key metrics in a horizontal banner format.
+
+  @example
+  {% content_for 'block', type: 'stats', id: 'hero-stats' %}
+{% enddoc %}
+
+<div
+  {{ block.shopify_attributes }}
+  class="relative stats-outer"
+  style="
+    --stats-background: {{ block.settings.background_color | default: '#dc2626' }};
+    --stats-text-color: {{ block.settings.text_color | default: '#ffffff' }};
+    --stats-padding: {{ block.settings.padding | default: 32 }}px;
+    --stats-border-radius: {{ block.settings.border_radius | default: 12 }}px;
+    --stats-gap: {{ block.settings.gap | default: 24 }}px;
+    --stats-width: {{ block.settings.width | default: 100 }}%;
+  "
+>
+  <div
+    class="stats-block"
+    style="
+      {% if block.settings.floating == true %}
+        position: absolute;
+        top: -50%;
+      {% endif %}
+    "
+  >
+    <div class="stats-container">
+      {% for i in (1..4) %}
+        {% liquid
+          assign stat_number_key = 'stat_' | append: i | append: '_number'
+          assign stat_label_key = 'stat_' | append: i | append: '_label'
+          assign stat_number = block.settings[stat_number_key]
+          assign stat_label = block.settings[stat_label_key]
+        %}
+
+        {% if stat_number != blank and stat_label != blank %}
+          <div class="stat-item">
+            <div class="stat-number" data-font="{{ block.settings.number_font | default: 'heading' }}">
+              {{ stat_number }}
+            </div>
+            <div class="stat-label" data-font="{{ block.settings.label_font | default: 'body' }}">{{ stat_label }}</div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .stats-outer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    z-index: 2;
+  }
+
+  .stats-block {
+    background: var(--stats-background);
+    border-radius: var(--stats-border-radius);
+    padding: var(--stats-padding);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.25), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    width: var(--stats-width);
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  .stats-container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--stats-gap);
+    align-items: center;
+    text-align: center;
+  }
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--stats-text-color);
+  }
+
+  .stat-number[data-font='heading'] {
+    font-family: var(--font-heading--family);
+  }
+
+  .stat-number[data-font='body'] {
+    font-family: var(--font-body--family);
+  }
+
+  .stat-label {
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--stats-text-color);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .stat-label[data-font='heading'] {
+    font-family: var(--font-heading--family);
+  }
+
+  .stat-label[data-font='body'] {
+    font-family: var(--font-body--family);
+  }
+
+  @media (max-width: 768px) {
+    .stats-container {
+      grid-template-columns: repeat(2, 1fr);
+      gap: calc(var(--stats-gap) / 2);
+    }
+
+    .stat-number {
+      font-size: 2rem;
+    }
+
+    .stat-label {
+      font-size: 0.875rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .stats-container {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .stat-number {
+      font-size: 1.75rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Statistics",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Statistics"
+    },
+    {
+      "type": "text",
+      "id": "stat_1_number",
+      "label": "Statistic 1 - Number",
+      "default": "+10K"
+    },
+    {
+      "type": "text",
+      "id": "stat_1_label",
+      "label": "Statistic 1 - Label",
+      "default": "Visitors"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_number",
+      "label": "Statistic 2 - Number",
+      "default": "+30"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_label",
+      "label": "Statistic 2 - Label",
+      "default": "Classes"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_number",
+      "label": "Statistic 3 - Number",
+      "default": "221"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_label",
+      "label": "Statistic 3 - Label",
+      "default": "Exhibitors"
+    },
+    {
+      "type": "text",
+      "id": "stat_4_number",
+      "label": "Statistic 4 - Number",
+      "default": "9K"
+    },
+    {
+      "type": "text",
+      "id": "stat_4_label",
+      "label": "Statistic 4 - Label",
+      "default": "Exhibitors"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "select",
+      "id": "number_font",
+      "label": "Number Font",
+      "options": [
+        {
+          "value": "heading",
+          "label": "Heading Font"
+        },
+        {
+          "value": "body",
+          "label": "Body Font"
+        }
+      ],
+      "default": "heading"
+    },
+    {
+      "type": "select",
+      "id": "label_font",
+      "label": "Label Font",
+      "options": [
+        {
+          "value": "heading",
+          "label": "Heading Font"
+        },
+        {
+          "value": "body",
+          "label": "Body Font"
+        }
+      ],
+      "default": "body"
+    },
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "checkbox",
+      "id": "floating",
+      "label": "Floating",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "width",
+      "label": "Block Width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100,
+      "info": "Width of the stats block container"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#dc2626"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "padding",
+      "label": "Padding",
+      "min": 16,
+      "max": 64,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Border Radius",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Gap Between Items",
+      "min": 12,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    }
+  ],
+  "presets": [
+    {
+      "name": "Statistics Banner",
+      "category": "Content",
+      "settings": {
+        "stat_1_number": "+10K",
+        "stat_1_label": "Visitors",
+        "stat_2_number": "+30",
+        "stat_2_label": "Classes",
+        "stat_3_number": "221",
+        "stat_3_label": "Exhibitors",
+        "stat_4_number": "9K",
+        "stat_4_label": "Exhibitors",
+        "background_color": "#dc2626",
+        "text_color": "#ffffff"
+      }
+    }
+  ]
+}
+{% endschema %}

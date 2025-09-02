@@ -18,6 +18,7 @@
     {% render 'gap-style', value: gap_between_elements, name: 'marquee-gap' %}
     --marquee-direction: {{ block_settings.movement_direction }};
     {%- if block_settings.transparent_background == true -%}background-color: transparent;{%- endif -%}
+    {%- if block_settings.rotation != 0 -%}transform: rotate({{ block_settings.rotation }}deg);{%- endif -%}
   "
   data-speed-factor="25"
   data-movement-direction="{{ block_settings.movement_direction }}"
@@ -132,6 +133,17 @@
         }
       ],
       "default": "normal"
+    },
+    {
+      "type": "range",
+      "id": "rotation",
+      "label": "Rotation angle",
+      "min": -45,
+      "max": 45,
+      "step": 1,
+      "unit": "deg",
+      "default": 0,
+      "info": "Tilt the marquee text at an angle"
     },
     {
       "type": "checkbox",

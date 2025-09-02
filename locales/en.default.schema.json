@@ -673,6 +673,8 @@
     "account": "Account",
     "alignment": "Alignment",
     "alignment_mobile": "Mobile alignment",
+    "horizontal_alignment_mobile": "Horizontal alignment (mobile)",
+    "vertical_alignment_mobile": "Vertical alignment (mobile)",
     "align_baseline": "Align text baseline",
     "animation_repeat": "Repeat animation",
     "add_discount_code": "Allow discounts in cart",

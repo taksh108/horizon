@@ -43,13 +43,16 @@
     autoplay_speed: section.settings.autoplay_speed,
     slides: slides,
     slide_count: section.blocks.size,
-    slide_size: section.settings.slide_height
+    slide_size: section.settings.slide_height,
+    corner_radius: section.settings.corner_radius,
+    mobile_layout: section.settings.mobile_layout,
+    mobile_slide_height: section.settings.mobile_slide_height
   %}
 </div>
 
 {% schema %}
 {
-  "name": "t:names.slideshow",
+  "name": "Slideshow",
   "class": "container-background-image",
   "blocks": [
     {
@@ -63,27 +66,27 @@
     {
       "type": "select",
       "id": "icons_style",
-      "label": "t:settings.navigation",
+      "label": "Navigation",
       "options": [
         {
           "value": "arrow",
-          "label": "t:options.arrows"
+          "label": "Arrows"
         },
         {
           "value": "chevron",
-          "label": "t:options.chevrons"
+          "label": "Chevrons"
         },
         {
           "value": "arrows_large",
-          "label": "t:options.large_arrows"
+          "label": "Large arrows"
         },
         {
           "value": "chevron_large",
-          "label": "t:options.large_chevrons"
+          "label": "Large chevrons"
         },
         {
           "value": "none",
-          "label": "t:options.none"
+          "label": "None"
         }
       ],
       "default": "arrows_large"
@@ -91,15 +94,15 @@
     {
       "type": "select",
       "id": "slideshow_controls_style",
-      "label": "t:settings.pagination",
+      "label": "Pagination",
       "options": [
         {
           "value": "dots",
-          "label": "t:options.dots"
+          "label": "Dots"
         },
         {
           "value": "counter",
-          "label": "t:options.counter"
+          "label": "Counter"
         }
       ],
       "default": "dots"
@@ -107,19 +110,19 @@
     {
       "type": "color_scheme",
       "id": "color_scheme",
-      "label": "t:settings.color_scheme",
+      "label": "Color scheme",
       "default": "primary"
     },
     {
       "type": "checkbox",
       "id": "autoplay",
-      "label": "t:settings.auto_rotate_slides",
+      "label": "Auto rotate slides",
       "default": false
     },
     {
       "type": "range",
       "id": "autoplay_speed",
-      "label": "t:settings.speed",
+      "label": "Speed",
       "min": 3,
       "max": 7,
       "step": 1,
@@ -128,21 +131,31 @@
       "visible_if": "{{ section.settings.autoplay }}"
     },
     {
+      "type": "range",
+      "id": "corner_radius",
+      "label": "Corner radius",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
       "type": "header",
-      "content": "t:content.size"
+      "content": "Size"
     },
     {
       "type": "select",
       "id": "section_width",
-      "label": "t:settings.width",
+      "label": "Width",
       "options": [
         {
           "value": "page-width",
-          "label": "t:options.page"
+          "label": "Page"
         },
         {
           "value": "full-width",
-          "label": "t:options.full"
+          "label": "Full"
         }
       ],
       "default": "full-width"
@@ -153,32 +166,77 @@
       "options": [
         {
           "value": "auto",
-          "label": "t:options.auto"
+          "label": "Auto"
         },
         {
           "value": "small",
-          "label": "t:options.small"
+          "label": "Small"
         },
         {
           "value": "medium",
-          "label": "t:options.medium"
+          "label": "Medium"
         },
         {
           "value": "large",
-          "label": "t:options.large"
+          "label": "Large"
         }
       ],
       "default": "medium",
-      "label": "t:settings.height"
+      "label": "Height"
     },
     {
       "type": "header",
-      "content": "t:content.padding"
+      "content": "Mobile"
+    },
+    {
+      "type": "select",
+      "id": "mobile_layout",
+      "label": "Mobile layout",
+      "options": [
+        {
+          "value": "slideshow",
+          "label": "Slideshow"
+        },
+        {
+          "value": "single",
+          "label": "Single slide"
+        }
+      ],
+      "default": "slideshow"
+    },
+    {
+      "type": "select",
+      "id": "mobile_slide_height",
+      "options": [
+        {
+          "value": "auto",
+          "label": "Auto"
+        },
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ],
+      "default": "medium",
+      "label": "Mobile height",
+      "visible_if": "{{ section.settings.mobile_layout == 'slideshow' or section.settings.mobile_layout == 'single' }}"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
     },
     {
       "type": "range",
       "id": "padding-block-start",
-      "label": "t:settings.top",
+      "label": "Top",
       "min": 0,
       "max": 100,
       "step": 1,
@@ -188,7 +246,7 @@
     {
       "type": "range",
       "id": "padding-block-end",
-      "label": "t:settings.bottom",
+      "label": "Bottom",
       "min": 0,
       "max": 100,
       "step": 1,
@@ -198,8 +256,8 @@
   ],
   "presets": [
     {
-      "name": "t:names.slideshow",
-      "category": "t:categories.storytelling",
+      "name": "Slideshow",
+      "category": "Storytelling",
       "blocks": {
         "slide_1": {
           "type": "_slide",
