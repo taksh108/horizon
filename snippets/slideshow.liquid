@@ -21,6 +21,9 @@
   @param {string} [arrows_position] - The position of the arrows, defaults to 'bottom'
   @param {string} [attributes] - Additional attributes to add to the slideshow component
   @param {boolean} [header] - The title of the slideshow
+  @param {number} [corner_radius] - Corner radius for slideshow slides in pixels
+  @param {string} [mobile_layout] - Mobile layout: 'slideshow' or 'single'
+  @param {string} [mobile_slide_height] - Mobile slide height: 'auto', 'small', 'medium', or 'large'
 
   @example
   {% render 'slideshow', slides: slides, slide_count: collection.products.size, ref: 'mobileSlideshow' %}
@@ -29,14 +32,23 @@
 {% assign class = class | strip %}
 {% assign style = style | strip %}
 
+{%- liquid
+  assign mobile_layout_class = ''
+  if mobile_layout == 'single'
+    assign mobile_layout_class = ' slideshow--mobile-single'
+  endif
+
+  assign combined_class = class | append: mobile_layout_class
+-%}
+
 <slideshow-component
   {% if ref != blank %}
     ref="{{ ref }}"
   {% endif %}
-  {% if class != blank %}
-    class="{{ class }}"
+  {% if combined_class != blank %}
+    class="{{ combined_class }}"
   {% endif %}
-  style="--slideshow-timeline: {% render 'timeline-scope', count: slide_count, prefix: 'slide' %};{{ style }}"
+  style="--slideshow-timeline: {% render 'timeline-scope', count: slide_count, prefix: 'slide' %};{% if corner_radius %}--slideshow-corner-radius: {{ corner_radius }}px;{% endif %}{% if mobile_slide_height %}--slideshow-mobile-height: {{ mobile_slide_height }};{% endif %}{{ style }}"
   {% if autoplay == true %}
     autoplay="{{ autoplay_speed }}" aria-live="polite"
   {% endif %}
