@@ -254,10 +254,35 @@
       "id": "overlay_opacity",
       "label": "Overlay Opacity",
       "min": 0,
-      "max": 80,
+      "max": 100,
       "step": 5,
       "unit": "%",
-      "default": 40
+      "default": 80
+    },
+    {
+      "type": "select",
+      "id": "gradient_direction",
+      "label": "Gradient Direction",
+      "options": [
+        {
+          "value": "to top",
+          "label": "Bottom to Top"
+        },
+        {
+          "value": "to bottom",
+          "label": "Top to Bottom"
+        },
+        {
+          "value": "to left",
+          "label": "Right to Left"
+        },
+        {
+          "value": "to right",
+          "label": "Left to Right"
+        }
+      ],
+      "default": "to top",
+      "info": "Direction of the gradient overlay"
     },
     {
       "type": "header",
@@ -377,7 +402,8 @@
         "title": "Arizona",
         "subtitle": "Dates",
         "button_label": "Go to Event",
-        "overlay_opacity": 40
+        "overlay_opacity": 80,
+        "gradient_direction": "to top"
       }
     }
   ]
