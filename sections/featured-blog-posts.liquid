@@ -2,22 +2,7 @@
   assign max_items = section.settings.post_limit
 %}
 
-<div class="section-background color-{{ section.settings.color_scheme }}"></div>
-
-<div
-  class="
-    section
-    section--{{ section.settings.section_width }}
-    color-{{ section.settings.color_scheme }}
-    section-resource-list
-    spacing-style
-    gap-style
-  "
-  style="
-    {%- render 'spacing-style', settings: section.settings -%}
-    {%- render 'gap-style', value: section.settings.gap -%}
-  "
->
+{% capture capture_section_content %}
   {% content_for 'block', id: 'static-blog-title', type: '_featured-blog-posts-title' %}
 
   {% if section.settings.blog != blank and section.settings.blog.articles_count > 0 %}
@@ -56,7 +41,9 @@
     content_type: 'articles',
     test_id: 'featured-blog-posts'
   %}
-</div>
+{% endcapture %}
+
+{% render 'section', section: section, children: capture_section_content %}
 
 {% stylesheet %}
   .featured-blog-posts h3 {
@@ -288,6 +275,123 @@
     },
     {
       "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "select",
+      "id": "background_media",
+      "label": "t:settings.background_media",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.none"
+        },
+        {
+          "value": "image",
+          "label": "t:options.image"
+        },
+        {
+          "value": "video",
+          "label": "t:options.video"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "t:settings.video",
+      "visible_if": "{{ section.settings.background_media == 'video' }}"
+    },
+    {
+      "type": "select",
+      "id": "video_position",
+      "label": "t:settings.video_position",
+      "options": [
+        {
+          "value": "cover",
+          "label": "t:options.cover"
+        },
+        {
+          "value": "contain",
+          "label": "t:options.contain"
+        }
+      ],
+      "default": "cover",
+      "visible_if": "{{ section.settings.background_media == 'video' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "t:settings.image",
+      "visible_if": "{{ section.settings.background_media == 'image' }}"
+    },
+    {
+      "type": "select",
+      "id": "background_image_position",
+      "label": "t:settings.image_position",
+      "options": [
+        {
+          "value": "cover",
+          "label": "t:options.cover"
+        },
+        {
+          "value": "fit",
+          "label": "t:options.fit"
+        }
+      ],
+      "default": "cover",
+      "visible_if": "{{ section.settings.background_media == 'image' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "toggle_overlay",
+      "label": "t:settings.background_overlay"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "t:settings.overlay_color",
+      "alpha": true,
+      "default": "#00000026",
+      "visible_if": "{{ section.settings.toggle_overlay }}"
+    },
+    {
+      "type": "select",
+      "id": "overlay_style",
+      "label": "t:settings.overlay_style",
+      "options": [
+        {
+          "value": "solid",
+          "label": "t:options.solid"
+        },
+        {
+          "value": "gradient",
+          "label": "t:options.gradient"
+        }
+      ],
+      "default": "solid",
+      "visible_if": "{{ section.settings.toggle_overlay }}"
+    },
+    {
+      "type": "select",
+      "id": "gradient_direction",
+      "label": "t:settings.gradient_direction",
+      "options": [
+        {
+          "value": "to top",
+          "label": "t:options.up"
+        },
+        {
+          "value": "to bottom",
+          "label": "t:options.down"
+        }
+      ],
+      "default": "to top",
+      "visible_if": "{{ section.settings.toggle_overlay and section.settings.overlay_style == 'gradient' }}"
+    },
+    {
+      "type": "header",
       "content": "t:content.padding"
     },
     {
@@ -371,6 +475,9 @@
         "icons_style": "arrow",
         "icons_shape": "circle",
         "gap": 12,
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
         "padding-block-start": 48,
         "padding-block-end": 48
       }
@@ -433,6 +540,9 @@
         "columns_gap": 8,
         "rows_gap": 8,
         "gap": 12,
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
         "padding-block-start": 48,
         "padding-block-end": 48
       }
@@ -491,6 +601,9 @@
         "layout_type": "editorial",
         "carousel_on_mobile": false,
         "gap": 64,
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
         "padding-block-start": 48,
         "padding-block-end": 48
       }

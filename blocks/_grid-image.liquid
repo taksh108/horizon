@@ -19,6 +19,8 @@
           --overlay-color: {{ block.settings.overlay_color }};
         {% endif %}
         --gradient-direction: {{ block.settings.gradient_direction | default: 'to top' }};
+        --content-justify: {{ block.settings.horizontal_alignment | default: 'center' }};
+        --content-align: {{ block.settings.vertical_alignment | default: 'end' }};
       "
     >
       <div class="grid-image__overlay"></div>
@@ -102,8 +104,9 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    display: flex;
-    align-items: flex-end;
+    display: grid;
+    justify-items: var(--content-justify, center);
+    align-items: var(--content-align, end);
     padding: 2rem;
   }
 
@@ -123,6 +126,22 @@
     z-index: 2;
     color: white;
     max-width: 100%;
+    text-align: center;
+  }
+
+  /* Text alignment overrides based on horizontal position */
+  .grid-image__container[style*="--content-justify: start"] .grid-image__content,
+  .grid-image__container[style*="--content-justify: flex-start"] .grid-image__content {
+    text-align: left;
+  }
+
+  .grid-image__container[style*="--content-justify: end"] .grid-image__content,
+  .grid-image__container[style*="--content-justify: flex-end"] .grid-image__content {
+    text-align: right;
+  }
+
+  .grid-image__container[style*="--content-justify: center"] .grid-image__content {
+    text-align: center;
   }
 
   .grid-image__title {
@@ -158,6 +177,8 @@
   }
 
   .grid-image__button {
+    border-radius: 9999px;
+    line-height: 1;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -166,7 +187,6 @@
     background: transparent;
     color: white;
     text-decoration: none;
-    border-radius: 4px;
     font-weight: 500;
     transition: all 0.3s ease;
     cursor: pointer;
@@ -283,6 +303,52 @@
       ],
       "default": "to top",
       "info": "Direction of the gradient overlay"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "horizontal_alignment",
+      "label": "Horizontal Alignment",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "info": "Horizontal position of text content"
+    },
+    {
+      "type": "select",
+      "id": "vertical_alignment",
+      "label": "Vertical Alignment",
+      "options": [
+        {
+          "value": "start",
+          "label": "Top"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "end",
+          "label": "Bottom"
+        }
+      ],
+      "default": "end",
+      "info": "Vertical position of text content"
     },
     {
       "type": "header",
@@ -403,7 +469,9 @@
         "subtitle": "Dates",
         "button_label": "Go to Event",
         "overlay_opacity": 80,
-        "gradient_direction": "to top"
+        "gradient_direction": "to top",
+        "horizontal_alignment": "center",
+        "vertical_alignment": "end"
       }
     }
   ]
