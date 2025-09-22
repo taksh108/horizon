@@ -1,0 +1,458 @@
+{% doc %}
+  Bento grid container block that displays grid image blocks in various layout patterns.
+  Supports grid, bento, carousel, and editorial layouts with mobile-responsive design.
+
+  @example
+  {% content_for 'block', type: '_bento-grid', id: 'featured-locations' %}
+{% enddoc %}
+
+{% liquid
+  assign max_items = block.blocks.size
+  if max_items == 0
+    assign max_items = 6
+  endif
+%}
+
+<div
+  {{ block.shopify_attributes }}
+  class="
+    bento-grid-section
+    spacing-style
+    gap-style
+  "
+  style="
+    {%- render 'spacing-style', settings: block.settings -%}
+    {%- render 'gap-style', value: block.settings.gap -%}
+  "
+>
+  {% comment %} Render the title if provided {% endcomment %}
+  {% if block.settings.title != blank %}
+    <div class="bento-grid__header">
+      <h2
+        class="bento-grid__title"
+        data-font="{{ block.settings.title_font | default: 'heading' }}"
+        style="
+          {% if block.settings.title_color != blank %}
+            color: {{ block.settings.title_color }};
+          {% endif %}
+          {% if block.settings.title_size != blank %}
+            font-size: {{ block.settings.title_size }}rem;
+          {% endif %}
+        "
+      >
+        {{ block.settings.title }}
+      </h2>
+    </div>
+  {% endif %}
+
+  {% comment %} Build list items for resource-list snippet {% endcomment %}
+  {% if block.blocks.size > 0 %}
+    {% capture list_items %}
+      {% for nested_block in block.blocks %}
+        <div class="bento-grid__item">
+          {% render nested_block %}
+        </div>
+        {% unless forloop.last %}
+          <!--@list/split-->
+        {% endunless %}
+      {% endfor %}
+    {% endcapture %}
+
+    {% liquid
+      assign list_items_array = list_items | strip | split: '<!--@list/split-->'
+    %}
+
+    {% render 'resource-list',
+      list_items: list_items,
+      list_items_array: list_items_array,
+      settings: block.settings,
+      carousel_ref: 'bentoGridCarousel',
+      slide_count: max_items,
+      content_type: 'custom',
+      test_id: 'bento-grid'
+    %}
+  {% else %}
+    {% comment %} Placeholder state {% endcomment %}
+    <div class="bento-grid__placeholder">
+      <div class="bento-grid__placeholder-content">
+        <h3>Add Grid Images</h3>
+        <p>Start building your bento grid by adding grid image blocks</p>
+      </div>
+    </div>
+  {% endif %}
+</div>
+
+{% stylesheet %}
+  .bento-grid-section {
+    width: 100%;
+  }
+
+  .bento-grid__header {
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .bento-grid__title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .bento-grid__title[data-font='heading'] {
+    font-family: var(--font-heading--family);
+  }
+
+  .bento-grid__title[data-font='body'] {
+    font-family: var(--font-body--family);
+  }
+
+  .bento-grid__item {
+    width: 100%;
+    height: 100%;
+    min-height: 250px;
+  }
+
+  .bento-grid__item .grid-image {
+    height: 100%;
+  }
+
+  .bento-grid__item .grid-image__container {
+    height: 100%;
+  }
+
+  .bento-grid__placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    background: #f9f9f9;
+    border: 2px dashed #ddd;
+    border-radius: 8px;
+  }
+
+  .bento-grid__placeholder-content {
+    text-align: center;
+    color: #666;
+  }
+
+  .bento-grid__placeholder-content h3 {
+    font-size: 1.5rem;
+    margin: 0 0 0.5rem 0;
+  }
+
+  .bento-grid__placeholder-content p {
+    font-size: 1rem;
+    margin: 0;
+  }
+
+  /* Mobile adjustments */
+  @media (max-width: 768px) {
+    .bento-grid__header {
+      margin-bottom: 1.5rem;
+    }
+
+    .bento-grid__title {
+      font-size: 2rem;
+    }
+
+    .bento-grid__item {
+      min-height: 200px;
+    }
+
+    .bento-grid__placeholder {
+      min-height: 300px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .bento-grid__title {
+      font-size: 1.75rem;
+    }
+
+    .bento-grid__item {
+      min-height: 180px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Bento Grid",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "info": "Optional title to display above the grid"
+    },
+    {
+      "type": "select",
+      "id": "title_font",
+      "label": "Title Font",
+      "options": [
+        {
+          "value": "heading",
+          "label": "Heading Font"
+        },
+        {
+          "value": "body",
+          "label": "Body Font"
+        }
+      ],
+      "default": "heading"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "info": "Leave blank for default color"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Title Size",
+      "min": 2,
+      "max": 4,
+      "step": 0.1,
+      "unit": "rem",
+      "default": 3,
+      "info": "Custom font size for the title"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "layout_type",
+      "label": "Layout Type",
+      "options": [
+        {
+          "value": "bento",
+          "label": "Bento Grid"
+        },
+        {
+          "value": "grid",
+          "label": "Regular Grid"
+        },
+        {
+          "value": "carousel",
+          "label": "Carousel"
+        }
+      ],
+      "default": "bento",
+      "info": "Bento grid creates dynamic layouts with varying sizes"
+    },
+    {
+      "type": "checkbox",
+      "id": "carousel_on_mobile",
+      "label": "Carousel on Mobile",
+      "default": true,
+      "visible_if": "{{ block.settings.layout_type != 'carousel' }}",
+      "info": "Display as carousel on mobile devices"
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "Columns (Desktop)",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 3,
+      "visible_if": "{{ block.settings.layout_type == 'grid' or block.settings.layout_type == 'carousel' }}",
+      "info": "Number of columns for grid/carousel layouts"
+    },
+    {
+      "type": "select",
+      "id": "mobile_columns",
+      "label": "Mobile Columns",
+      "options": [
+        {
+          "value": "1",
+          "label": "1 Column"
+        },
+        {
+          "value": "2",
+          "label": "2 Columns"
+        }
+      ],
+      "default": "2",
+      "visible_if": "{{ block.settings.layout_type == 'grid' and block.settings.carousel_on_mobile == false }}"
+    },
+    {
+      "type": "select",
+      "id": "mobile_card_size",
+      "label": "Mobile Card Size",
+      "options": [
+        {
+          "value": "70cqw",
+          "label": "Large"
+        },
+        {
+          "value": "60cqw",
+          "label": "Medium"
+        },
+        {
+          "value": "50cqw",
+          "label": "Small"
+        }
+      ],
+      "default": "60cqw",
+      "visible_if": "{{ block.settings.layout_type == 'carousel' or block.settings.carousel_on_mobile == true }}"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "columns_gap",
+      "label": "Gap Between Items",
+      "min": 8,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "default": 16,
+      "info": "Space between grid items"
+    },
+    {
+      "type": "range",
+      "id": "bento_gap",
+      "label": "Bento Gap",
+      "min": 8,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "default": 16,
+      "visible_if": "{{ block.settings.layout_type == 'bento' }}",
+      "info": "Gap for bento grid layout"
+    },
+    {
+      "type": "range",
+      "id": "rows_gap",
+      "label": "Row Gap",
+      "min": 8,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "default": 16,
+      "visible_if": "{{ block.settings.layout_type == 'grid' }}",
+      "info": "Vertical space between rows"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Section Gap",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 20,
+      "info": "Gap between title and grid"
+    },
+    {
+      "type": "header",
+      "content": "Carousel Navigation",
+      "visible_if": "{{ block.settings.layout_type == 'carousel' or block.settings.carousel_on_mobile == true }}"
+    },
+    {
+      "type": "select",
+      "id": "icons_style",
+      "label": "Navigation Icons",
+      "options": [
+        {
+          "value": "arrow",
+          "label": "Arrows"
+        },
+        {
+          "value": "chevron",
+          "label": "Chevrons"
+        },
+        {
+          "value": "arrows_large",
+          "label": "Large Arrows"
+        },
+        {
+          "value": "chevron_large",
+          "label": "Large Chevrons"
+        },
+        {
+          "value": "none",
+          "label": "None"
+        }
+      ],
+      "default": "arrow",
+      "visible_if": "{{ block.settings.layout_type == 'carousel' or block.settings.carousel_on_mobile == true }}"
+    },
+    {
+      "type": "select",
+      "id": "icons_shape",
+      "label": "Icon Background",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "circle",
+          "label": "Circle"
+        },
+        {
+          "value": "square",
+          "label": "Square"
+        }
+      ],
+      "default": "circle",
+      "visible_if": "{{ block.settings.icons_style != 'none' and block.settings.layout_type == 'carousel' or block.settings.carousel_on_mobile == true }}"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "_grid-image"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bento Grid",
+      "category": "Content",
+      "settings": {
+        "layout_type": "bento",
+        "carousel_on_mobile": true,
+        "columns_gap": 16,
+        "bento_gap": 16
+      },
+      "blocks": [
+        {
+          "type": "_grid-image",
+          "settings": {
+            "title": "Arizona",
+            "subtitle": "Dates",
+            "button_label": "Go to Event"
+          }
+        },
+        {
+          "type": "_grid-image",
+          "settings": {
+            "title": "California",
+            "subtitle": "Venues",
+            "button_label": "Explore"
+          }
+        },
+        {
+          "type": "_grid-image",
+          "settings": {
+            "title": "New York",
+            "subtitle": "Events",
+            "button_label": "View All"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

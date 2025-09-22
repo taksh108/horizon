@@ -1,0 +1,385 @@
+{% doc %}
+  Grid image block with overlaid content including title, subtitle, and button.
+  Perfect for creating cards with background images and call-to-action overlays.
+
+  @example
+  {% content_for 'block', type: '_grid-image', id: 'arizona-event' %}
+{% enddoc %}
+
+<div {{ block.shopify_attributes }} class="grid-image">
+  {% if block.settings.image %}
+    <div
+      class="grid-image__container"
+      style="
+        background-image: url('{{ block.settings.image | image_url: width: 800 }}');
+        {% if block.settings.overlay_opacity > 0 %}
+          --overlay-opacity: {{ block.settings.overlay_opacity | divided_by: 100.0 }};
+        {% endif %}
+        {% if block.settings.overlay_color != blank %}
+          --overlay-color: {{ block.settings.overlay_color }};
+        {% endif %}
+        --gradient-direction: {{ block.settings.gradient_direction | default: 'to top' }};
+      "
+    >
+      <div class="grid-image__overlay"></div>
+
+      <div class="grid-image__content">
+        {% if block.settings.title != blank %}
+          <h3
+            class="grid-image__title"
+            data-font="{{ block.settings.title_font | default: 'heading' }}"
+            style="
+              {% if block.settings.title_color != blank %}
+                color: {{ block.settings.title_color }};
+              {% endif %}
+              {% if block.settings.title_size != blank %}
+                font-size: {{ block.settings.title_size }}rem;
+              {% endif %}
+            "
+          >
+            {{ block.settings.title }}
+          </h3>
+        {% endif %}
+
+        {% if block.settings.subtitle != blank %}
+          <p
+            class="grid-image__subtitle"
+            data-font="{{ block.settings.subtitle_font | default: 'body' }}"
+            style="
+              {% if block.settings.subtitle_color != blank %}
+                color: {{ block.settings.subtitle_color }};
+              {% endif %}
+              {% if block.settings.subtitle_size != blank %}
+                font-size: {{ block.settings.subtitle_size }}rem;
+              {% endif %}
+            "
+          >
+            {{ block.settings.subtitle }}
+          </p>
+        {% endif %}
+
+        {% if block.settings.button_label != blank and block.settings.button_link != blank %}
+          <a
+            href="{{ block.settings.button_link }}"
+            class="grid-image__button button button--outline"
+            style="
+              {% if block.settings.button_text_color != blank %}
+                color: {{ block.settings.button_text_color }};
+                border-color: {{ block.settings.button_text_color }};
+              {% endif %}
+              {% if block.settings.button_hover_bg != blank %}
+                --button-hover-bg: {{ block.settings.button_hover_bg }};
+              {% endif %}
+            "
+          >
+            {{ block.settings.button_label }}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  {% else %}
+    <div class="grid-image__placeholder">
+      <div class="grid-image__content">
+        <p>Add an image to get started</p>
+      </div>
+    </div>
+  {% endif %}
+</div>
+
+{% stylesheet %}
+  .grid-image {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    min-height: 300px;
+  }
+
+  .grid-image__container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 300px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: flex-end;
+    padding: 2rem;
+  }
+
+  .grid-image__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(var(--gradient-direction), transparent 0%, var(--overlay-color, rgba(0, 0, 0, 0.7)) 100%);
+    opacity: var(--overlay-opacity, 0.8);
+    z-index: 1;
+  }
+
+  .grid-image__content {
+    position: relative;
+    z-index: 2;
+    color: white;
+    max-width: 100%;
+  }
+
+  .grid-image__title {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0 0 0.5rem 0;
+    color: white;
+  }
+
+  .grid-image__title[data-font='heading'] {
+    font-family: var(--font-heading--family);
+  }
+
+  .grid-image__title[data-font='body'] {
+    font-family: var(--font-body--family);
+  }
+
+  .grid-image__subtitle {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.4;
+    margin: 0 0 1.5rem 0;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .grid-image__subtitle[data-font='heading'] {
+    font-family: var(--font-heading--family);
+  }
+
+  .grid-image__subtitle[data-font='body'] {
+    font-family: var(--font-body--family);
+  }
+
+  .grid-image__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    border: 2px solid white;
+    background: transparent;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .grid-image__button:hover {
+    background: var(--button-hover-bg, white);
+    color: var(--button-hover-text, #000);
+    text-decoration: none;
+  }
+
+  .grid-image__placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+    background: #f5f5f5;
+    border: 2px dashed #ccc;
+    color: #666;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .grid-image__container {
+      padding: 1.5rem;
+      min-height: 250px;
+    }
+
+    .grid-image__title {
+      font-size: 1.5rem;
+    }
+
+    .grid-image__subtitle {
+      font-size: 0.9rem;
+    }
+
+    .grid-image__button {
+      padding: 0.625rem 1.25rem;
+      font-size: 0.9rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .grid-image__container {
+      padding: 1rem;
+      min-height: 200px;
+    }
+
+    .grid-image__title {
+      font-size: 1.25rem;
+    }
+
+    .grid-image__subtitle {
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Grid Image",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background Image"
+    },
+    {
+      "type": "header",
+      "content": "Overlay"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Overlay Color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay Opacity",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Arizona"
+    },
+    {
+      "type": "select",
+      "id": "title_font",
+      "label": "Title Font",
+      "options": [
+        {
+          "value": "heading",
+          "label": "Heading Font"
+        },
+        {
+          "value": "body",
+          "label": "Body Font"
+        }
+      ],
+      "default": "heading"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "info": "Leave blank for default white"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Title Size",
+      "min": 1,
+      "max": 4,
+      "step": 0.1,
+      "unit": "rem",
+      "default": 2,
+      "info": "Custom font size for the title"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Dates"
+    },
+    {
+      "type": "select",
+      "id": "subtitle_font",
+      "label": "Subtitle Font",
+      "options": [
+        {
+          "value": "heading",
+          "label": "Heading Font"
+        },
+        {
+          "value": "body",
+          "label": "Body Font"
+        }
+      ],
+      "default": "body"
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle Color",
+      "info": "Leave blank for default white"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size",
+      "label": "Subtitle Size",
+      "min": 1,
+      "max": 2,
+      "step": 0.1,
+      "unit": "rem",
+      "default": 1,
+      "info": "Custom font size for the subtitle"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Go to Event"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text & Border Color",
+      "info": "Leave blank for default white"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_bg",
+      "label": "Button Hover Background",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Grid Image",
+      "category": "Content",
+      "settings": {
+        "title": "Arizona",
+        "subtitle": "Dates",
+        "button_label": "Go to Event",
+        "overlay_opacity": 40
+      }
+    }
+  ]
+}
+{% endschema %}

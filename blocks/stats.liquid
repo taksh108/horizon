@@ -1,6 +1,9 @@
 {% doc %}
   Statistics display block showing key metrics in a horizontal banner format.
 
+  DEPRECATED: This block is now deprecated in favor of the new modular approach.
+  Use '_stats-container' block with individual '_stat-item' blocks for better flexibility.
+
   @example
   {% content_for 'block', type: 'stats', id: 'hero-stats' %}
 {% enddoc %}
@@ -261,7 +264,7 @@
 
 {% schema %}
 {
-  "name": "Statistics",
+  "name": "Statistics (Legacy)",
   "tag": null,
   "settings": [
     {

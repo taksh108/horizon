@@ -1,0 +1,314 @@
+{% doc %}
+  Statistics container block that displays individual stat items in a horizontal layout on desktop
+  and carousel on mobile. Accepts individual stat item blocks for flexible content management.
+
+  @example
+  {% content_for 'block', type: '_stats-container', id: 'hero-stats' %}
+{% enddoc %}
+
+<div
+  {{ block.shopify_attributes }}
+  class="relative stats-outer"
+  style="
+    --stats-background: {{ block.settings.background_color | default: '#dc2626' }};
+    --stats-text-color: {{ block.settings.text_color | default: '#ffffff' }};
+    --stats-padding: {{ block.settings.padding | default: 32 }}px;
+    --stats-border-radius: {{ block.settings.border_radius | default: 12 }}px;
+    --stats-gap: {{ block.settings.gap | default: 24 }}px;
+    --stats-width: {{ block.settings.width | default: 100 }}%;
+  "
+>
+  <div
+    class="stats-block"
+    style="
+      {% if block.settings.floating == true %}
+        position: absolute;
+        translate: 0 -50%;
+      {% endif %}
+    "
+  >
+    {% comment %} Count visible nested blocks {% endcomment %}
+    {% liquid
+      assign nested_stats_count = 0
+      assign nested_stats_html = ''
+    %}
+
+    {% comment %} Desktop Layout {% endcomment %}
+    <div class="stats-container stats-container--desktop">
+      {% content_for 'blocks' %}
+    </div>
+
+    {% comment %} Mobile layouts {% endcomment %}
+    {% if block.settings.mobile_carousel %}
+      {% comment %} Mobile Carousel Layout {% endcomment %}
+      <div class="stats-container stats-container--mobile">
+        {% if block.blocks.size > 1 %}
+          {% capture slides %}
+            {% assign slide_index = 0 %}
+            {% comment %} We need to manually iterate for carousel slides {% endcomment %}
+            {% for nested_block in block.blocks %}
+              {% capture slide_content %}
+                {% render nested_block %}
+              {% endcapture %}
+
+              {% render 'slideshow-slide',
+                index: slide_index,
+                children: slide_content,
+                class: 'stats-slide'
+              %}
+              {% assign slide_index = slide_index | plus: 1 %}
+            {% endfor %}
+          {% endcapture %}
+
+          {% render 'slideshow',
+            ref: 'statsCarousel',
+            class: 'stats-slideshow',
+            slides: slides,
+            slide_count: block.blocks.size,
+            infinite: false,
+            auto_hide_controls: true,
+            mobile_layout: 'slideshow',
+            show_arrows: true,
+            icon_style: 'arrow'
+          %}
+        {% else %}
+          {% comment %} Single item - no carousel needed {% endcomment %}
+          {% for nested_block in block.blocks %}
+            {% render nested_block %}
+          {% endfor %}
+        {% endif %}
+      </div>
+    {% else %}
+      {% comment %} Mobile Grid Layout (fallback) {% endcomment %}
+      <div class="stats-container stats-container--mobile-grid">
+        {% for nested_block in block.blocks %}
+          {% render nested_block %}
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% stylesheet %}
+  .stats-outer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    z-index: 2;
+  }
+
+  .stats-block {
+    background: var(--stats-background);
+    border-radius: var(--stats-border-radius);
+    padding: var(--stats-padding);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.25), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    width: var(--stats-width);
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  .stats-container--desktop {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--stats-gap);
+    align-items: center;
+    text-align: center;
+  }
+
+  .stats-container--mobile {
+    display: none;
+  }
+
+  .stats-container--mobile-grid {
+    display: none;
+    width: 100%;
+    grid-template-columns: repeat(2, 1fr);
+    gap: calc(var(--stats-gap) / 2);
+    align-items: center;
+    text-align: center;
+  }
+
+  /* Global stat item styles that apply to all contained stat items */
+  .stats-block .stat-item .stat-number {
+    color: var(--stats-text-color);
+  }
+
+  .stats-block .stat-item .stat-label {
+    color: var(--stats-text-color);
+  }
+
+  /* Override individual stat colors if they're not custom set */
+  .stats-block .stat-item .stat-number:not([style*='color']) {
+    color: var(--stats-text-color) !important;
+  }
+
+  .stats-block .stat-item .stat-label:not([style*='color']) {
+    color: var(--stats-text-color) !important;
+  }
+
+  @media (max-width: 768px) {
+    .stats-container--desktop {
+      display: none;
+    }
+
+    .stats-container--mobile {
+      display: block;
+    }
+
+    .stats-container--mobile-grid {
+      display: grid;
+    }
+
+    /* Carousel-specific styles */
+    .stats-slideshow {
+      width: 100%;
+    }
+
+    .stats-slide .stat-item {
+      padding: 0 1rem;
+      min-height: 120px;
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .stats-container--mobile-grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .stats-slide .stat-item {
+      min-height: 100px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Statistics Container",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Mobile Layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "mobile_carousel",
+      "label": "Enable Mobile Carousel",
+      "default": true,
+      "info": "Display stats as a carousel on mobile devices. When disabled, falls back to grid layout."
+    },
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "checkbox",
+      "id": "floating",
+      "label": "Floating",
+      "default": true,
+      "info": "Position the stats banner as a floating overlay"
+    },
+    {
+      "type": "range",
+      "id": "width",
+      "label": "Block Width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100,
+      "info": "Width of the stats block container"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#dc2626"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "padding",
+      "label": "Padding",
+      "min": 16,
+      "max": 64,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Border Radius",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Gap Between Items",
+      "min": 12,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    }
+  ],
+  "blocks": [
+    {
+      "type": "_stat-item"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Statistics Container",
+      "category": "Content",
+      "settings": {
+        "mobile_carousel": true,
+        "background_color": "#dc2626",
+        "text_color": "#ffffff"
+      },
+      "blocks": [
+        {
+          "type": "_stat-item",
+          "settings": {
+            "number": "+10K",
+            "label": "Visitors"
+          }
+        },
+        {
+          "type": "_stat-item",
+          "settings": {
+            "number": "+30",
+            "label": "Classes"
+          }
+        },
+        {
+          "type": "_stat-item",
+          "settings": {
+            "number": "221",
+            "label": "Exhibitors"
+          }
+        },
+        {
+          "type": "_stat-item",
+          "settings": {
+            "number": "9K",
+            "label": "Exhibitors"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
