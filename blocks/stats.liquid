@@ -26,7 +26,23 @@
       {% endif %}
     "
   >
-    <div class="stats-container">
+    {% liquid
+      assign visible_stats = ''
+      for i in (1..4)
+        assign stat_number_key = 'stat_' | append: i | append: '_number'
+        assign stat_label_key = 'stat_' | append: i | append: '_label'
+        assign stat_number = block.settings[stat_number_key]
+        assign stat_label = block.settings[stat_label_key]
+        if stat_number != blank and stat_label != blank
+          assign visible_stats = visible_stats | append: i | append: ','
+        endif
+      endfor
+      assign stats_array = visible_stats | split: ',' | where: 'size', '>', 0
+      assign stats_count = stats_array.size
+    %}
+
+    {% comment %} Desktop Layout {% endcomment %}
+    <div class="stats-container stats-container--desktop">
       {% for i in (1..4) %}
         {% liquid
           assign stat_number_key = 'stat_' | append: i | append: '_number'
@@ -45,6 +61,74 @@
         {% endif %}
       {% endfor %}
     </div>
+
+    {% comment %} Mobile Carousel Layout {% endcomment %}
+    {% if block.settings.mobile_carousel and stats_count > 1 %}
+      <div class="stats-container stats-container--mobile">
+        {% capture slides %}
+          {% assign slide_index = 0 %}
+          {% for i in (1..4) %}
+            {% liquid
+              assign stat_number_key = 'stat_' | append: i | append: '_number'
+              assign stat_label_key = 'stat_' | append: i | append: '_label'
+              assign stat_number = block.settings[stat_number_key]
+              assign stat_label = block.settings[stat_label_key]
+            %}
+
+            {% if stat_number != blank and stat_label != blank %}
+              {% capture slide_content %}
+                <div class="stat-item">
+                  <div class="stat-number" data-font="{{ block.settings.number_font | default: 'heading' }}">
+                    {{ stat_number }}
+                  </div>
+                  <div class="stat-label" data-font="{{ block.settings.label_font | default: 'body' }}">{{ stat_label }}</div>
+                </div>
+              {% endcapture %}
+
+              {% render 'slideshow-slide',
+                index: slide_index,
+                children: slide_content,
+                class: 'stats-slide'
+              %}
+              {% assign slide_index = slide_index | plus: 1 %}
+            {% endif %}
+          {% endfor %}
+        {% endcapture %}
+
+        {% render 'slideshow',
+          ref: 'statsCarousel',
+          class: 'stats-slideshow',
+          slides: slides,
+          slide_count: stats_count,
+          infinite: false,
+          auto_hide_controls: true,
+          mobile_layout: 'slideshow',
+          show_arrows: true,
+          icon_style: 'arrow'
+        %}
+      </div>
+    {% else %}
+      {% comment %} Mobile Grid Layout (fallback) {% endcomment %}
+      <div class="stats-container stats-container--mobile-grid">
+        {% for i in (1..4) %}
+          {% liquid
+            assign stat_number_key = 'stat_' | append: i | append: '_number'
+            assign stat_label_key = 'stat_' | append: i | append: '_label'
+            assign stat_number = block.settings[stat_number_key]
+            assign stat_label = block.settings[stat_label_key]
+          %}
+
+          {% if stat_number != blank and stat_label != blank %}
+            <div class="stat-item">
+              <div class="stat-number" data-font="{{ block.settings.number_font | default: 'heading' }}">
+                {{ stat_number }}
+              </div>
+              <div class="stat-label" data-font="{{ block.settings.label_font | default: 'body' }}">{{ stat_label }}</div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
   </div>
 </div>
 
@@ -66,11 +150,24 @@
     margin: 0 auto;
   }
 
-  .stats-container {
+  .stats-container--desktop {
     width: 100%;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: var(--stats-gap);
+    align-items: center;
+    text-align: center;
+  }
+
+  .stats-container--mobile {
+    display: none;
+  }
+
+  .stats-container--mobile-grid {
+    display: none;
+    width: 100%;
+    grid-template-columns: repeat(2, 1fr);
+    gap: calc(var(--stats-gap) / 2);
     align-items: center;
     text-align: center;
   }
@@ -114,9 +211,16 @@
   }
 
   @media (max-width: 768px) {
-    .stats-container {
-      grid-template-columns: repeat(2, 1fr);
-      gap: calc(var(--stats-gap) / 2);
+    .stats-container--desktop {
+      display: none;
+    }
+
+    .stats-container--mobile {
+      display: block;
+    }
+
+    .stats-container--mobile-grid {
+      display: grid;
     }
 
     .stat-number {
@@ -126,16 +230,31 @@
     .stat-label {
       font-size: 0.875rem;
     }
+
+    /* Carousel-specific styles */
+    .stats-slideshow {
+      width: 100%;
+    }
+
+    .stats-slide .stat-item {
+      padding: 0 1rem;
+      min-height: 120px;
+      justify-content: center;
+    }
   }
 
   @media (max-width: 480px) {
-    .stats-container {
+    .stats-container--mobile-grid {
       grid-template-columns: 1fr;
       gap: 16px;
     }
 
     .stat-number {
       font-size: 1.75rem;
+    }
+
+    .stats-slide .stat-item {
+      min-height: 100px;
     }
   }
 {% endstylesheet %}
@@ -235,6 +354,17 @@
     },
     {
       "type": "header",
+      "content": "Mobile Layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "mobile_carousel",
+      "label": "Enable Mobile Carousel",
+      "default": true,
+      "info": "Display stats as a carousel on mobile devices. When disabled, falls back to grid layout."
+    },
+    {
+      "type": "header",
       "content": "Appearance"
     },
     {
@@ -310,6 +440,7 @@
         "stat_3_label": "Exhibitors",
         "stat_4_number": "9K",
         "stat_4_label": "Exhibitors",
+        "mobile_carousel": true,
         "background_color": "#dc2626",
         "text_color": "#ffffff"
       }

@@ -1,0 +1,220 @@
+{% doc %}
+  Individual statistic item displaying a number and label with customizable styling.
+
+  @example
+  {% content_for 'block', type: '_stat-item', id: 'visitors-stat' %}
+{% enddoc %}
+
+<div {{ block.shopify_attributes }} class="stat-item">
+  {% if block.settings.number != blank %}
+    <div
+      class="stat-number"
+      data-font="{{ block.settings.number_font | default: 'heading' }}"
+      style="
+        {% if block.settings.number_color != blank %}
+          color: {{ block.settings.number_color }};
+        {% endif %}
+        {% if block.settings.number_size != blank %}
+          font-size: {{ block.settings.number_size }}rem;
+        {% endif %}
+      "
+    >
+      {{ block.settings.number }}
+    </div>
+  {% endif %}
+
+  {% if block.settings.label != blank %}
+    <div
+      class="stat-label"
+      data-font="{{ block.settings.label_font | default: 'body' }}"
+      style="
+        {% if block.settings.label_color != blank %}
+          color: {{ block.settings.label_color }};
+        {% endif %}
+        {% if block.settings.label_size != blank %}
+          font-size: {{ block.settings.label_size }}rem;
+        {% endif %}
+      "
+    >
+      {{ block.settings.label }}
+    </div>
+  {% endif %}
+</div>
+
+{% stylesheet %}
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+    min-height: 80px;
+    justify-content: center;
+  }
+
+  .stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1;
+    margin: 0;
+  }
+
+  .stat-number[data-font='heading'] {
+    font-family: var(--font-heading--family);
+  }
+
+  .stat-number[data-font='body'] {
+    font-family: var(--font-body--family);
+  }
+
+  .stat-label {
+    font-size: 1rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0;
+  }
+
+  .stat-label[data-font='heading'] {
+    font-family: var(--font-heading--family);
+  }
+
+  .stat-label[data-font='body'] {
+    font-family: var(--font-body--family);
+  }
+
+  /* Responsive typography */
+  @media (max-width: 768px) {
+    .stat-number {
+      font-size: 2rem;
+    }
+
+    .stat-label {
+      font-size: 0.875rem;
+    }
+
+    .stat-item {
+      min-height: 100px;
+      padding: 0.5rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .stat-number {
+      font-size: 1.75rem;
+    }
+
+    .stat-item {
+      min-height: 80px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Stat Item",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "number",
+      "label": "Number",
+      "default": "+10K",
+      "info": "The statistic number or value to display"
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label",
+      "default": "Visitors",
+      "info": "The description or label for this statistic"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "select",
+      "id": "number_font",
+      "label": "Number Font",
+      "options": [
+        {
+          "value": "heading",
+          "label": "Heading Font"
+        },
+        {
+          "value": "body",
+          "label": "Body Font"
+        }
+      ],
+      "default": "heading"
+    },
+    {
+      "type": "select",
+      "id": "label_font",
+      "label": "Label Font",
+      "options": [
+        {
+          "value": "heading",
+          "label": "Heading Font"
+        },
+        {
+          "value": "body",
+          "label": "Body Font"
+        }
+      ],
+      "default": "body"
+    },
+    {
+      "type": "header",
+      "content": "Styling"
+    },
+    {
+      "type": "color",
+      "id": "number_color",
+      "label": "Number Color",
+      "info": "Override the global text color for this stat's number"
+    },
+    {
+      "type": "color",
+      "id": "label_color",
+      "label": "Label Color",
+      "info": "Override the global text color for this stat's label"
+    },
+    {
+      "type": "range",
+      "id": "number_size",
+      "label": "Number Size",
+      "min": 1.5,
+      "max": 4,
+      "step": 0.1,
+      "unit": "rem",
+      "info": "Custom font size for the number (optional)"
+    },
+    {
+      "type": "range",
+      "id": "label_size",
+      "label": "Label Size",
+      "min": 0.75,
+      "max": 1.5,
+      "step": 0.05,
+      "unit": "rem",
+      "info": "Custom font size for the label (optional)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Stat Item",
+      "category": "Content",
+      "settings": {
+        "number": "+10K",
+        "label": "Visitors"
+      }
+    }
+  ]
+}
+{% endschema %}

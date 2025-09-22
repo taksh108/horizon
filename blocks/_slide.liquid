@@ -166,11 +166,6 @@
       {% if block_settings.vertical_on_mobile %}mobile-column{% endif %}"
       style="{% render 'layout-panel-style', settings: block_settings %}"
     >
-    <script>
-      console.log({
-        'block_settings': {{ block_settings | json }},
-      });
-    </script>
       {% content_for 'blocks' %}
     </div>
   </div>
