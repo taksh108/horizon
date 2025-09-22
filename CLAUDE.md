@@ -23,6 +23,13 @@ shopify theme push    # Push after validation
 
 **Important**: Run commands from repo root with Shopify CLI authenticated to correct `.shopify` profile.
 
+### Development Workflow Integration
+- **Theme Check**: Mandatory before every commit - this is the baseline quality gate
+- **Zero external dependencies**: Use native browser APIs only for JavaScript
+- **Component framework**: Use the built-in Component framework (see `assets/component.js`)
+- **Comprehensive standards**: Follow detailed coding rules in `.cursor/rules/` directory
+- **Inline Liquid**: Prefer inline liquid over variable declarations for straightforward props
+
 ### Git Workflow
 ```bash
 # Stay up to date with Horizon changes (if using as base)
@@ -100,20 +107,24 @@ This theme heavily uses **theme blocks** - reusable components that can be:
 - **Translation keys**: Namespace by feature (`customer.login.title`)
 
 ### CSS Guidelines
-- Never use IDs as selectors, avoid `!important`
-- Maintain `0 1 0` specificity where possible
-- Use BEM naming convention consistently (`.block__element--modifier`)
-- Namespace CSS variables (e.g., `--hero-padding`, `--component-padding`)
-- Prefer logical properties for RTL support
-- Mobile-first media queries
-- Scope variables to components when not global
+- **Never use IDs as selectors**, avoid `!important` at all costs
+- **Maintain `0 1 0` specificity** where possible (single class selector)
+- **Use BEM naming convention** consistently (`.block__element--modifier`)
+- **Namespace CSS variables** (e.g., `--hero-padding`, `--component-padding`)
+- **Prefer logical properties** for RTL support (`padding-inline`, `margin-block`)
+- **Mobile-first media queries** with `min-width`
+- **Scope variables to components** when not global
+- **Use CSS nesting sparingly** - never nest beyond first level except for media queries
+- **Scoped styles with inline variables**: Use `style` attributes for dynamic CSS variables instead of `{% style %}` tags
 
 ### Block Development
-- All blocks must include `{{ block.shopify_attributes }}` for editor functionality
-- Use descriptive documentation with `{% doc %}` tags
-- Follow standard scaffold: markup, optional `{% stylesheet %}`, schema
-- Implement proper schema configuration for theme editor
-- Follow consistent naming patterns (blocks prefixed with `_`)
+- **All blocks must include `{{ block.shopify_attributes }}`** for editor functionality
+- **Use descriptive documentation** with `{% doc %}` tags including usage examples
+- **Follow standard scaffold**: markup, optional `{% stylesheet %}`, schema
+- **Implement proper schema configuration** for theme editor
+- **Follow consistent naming patterns** (blocks prefixed with `_`)
+- **Static vs Dynamic**: Use `{% content_for 'block', type: 'name', id: 'unique-id' %}` for static blocks
+- **Nested blocks**: Support nesting with `{% content_for 'blocks' %}` where appropriate
 
 ### Testing & Quality Assurance
 - **Theme Check**: Run before every commit - this is the baseline gate
@@ -162,6 +173,44 @@ This theme heavily uses **theme blocks** - reusable components that can be:
 - Configure in `.shopify/metafields.json` for different resource types (products, collections, etc.)
 - Document new metafields with usage notes for merchant configuration
 
+## JavaScript Guidelines
+
+### Component Framework Usage
+- **Use the Component framework** from `assets/component.js` for all interactive elements
+- **Zero external dependencies** - use native browser APIs only
+- **Web Components pattern** with `customElements.define()`
+- **Async/await syntax** instead of `.then()` chaining
+- **Early returns** over nested conditionals
+- **Type safety with JSDoc** for all public methods and complex objects
+
+### JavaScript Code Structure
+```javascript
+import { Component } from '@theme/component';
+
+/**
+ * @typedef {Object} ComponentRefs
+ * @property {HTMLButtonElement} actionButton - Main action button
+ * @property {HTMLElement} [optionalElement] - Optional element
+ */
+
+/**
+ * @extends {Component<ComponentRefs>}
+ */
+class MyComponent extends Component {
+  async handleAction(event) {
+    event.preventDefault();
+    // Implementation with proper error handling
+  }
+}
+
+customElements.define('my-component', MyComponent);
+```
+
+### Event-Driven Architecture
+- **Use custom events** for component communication
+- **Dispatch events with typed details** using CustomEvent
+- **Handle async operations** with proper cleanup using AbortController
+
 ## Important Notes
 - This theme is web-native and server-rendered with Liquid
 - Business logic belongs on the server, not client-side
@@ -169,3 +218,4 @@ This theme heavily uses **theme blocks** - reusable components that can be:
 - The main branch may include unreleased features
 - Theme blocks are the primary architectural pattern for reusability
 - Review `release-notes.md` when touching shared components to avoid regressing recent work
+- **Comprehensive coding standards** are documented in `.cursor/rules/` - refer to these for detailed implementation guidance
