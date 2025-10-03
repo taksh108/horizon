@@ -1,0 +1,297 @@
+{% doc %}
+  Ticket card block for displaying product variants as selectable ticket options.
+
+  Usage:
+  {% content_for 'block', type: 'ticket-card', variant: variant %}
+{% enddoc %}
+
+{% liquid
+  assign icon = block.settings.icon
+  assign title = block.settings.title
+  if title == blank and variant
+    assign title = variant.title
+  endif
+  assign description = block.settings.description
+  assign note = block.settings.note
+
+  if block.settings.inherit_color_scheme
+    assign color_scheme = ''
+  else
+    assign color_scheme = block.settings.color_scheme
+  endif
+%}
+
+<ticket-card {{ block.shopify_attributes }} class="ticket-card color-{{ color_scheme }}">
+  <div class="ticket-card__icon">
+    {% if variant.image %}
+      {{ variant.image | image_url: width: 120 | image_tag: loading: 'lazy', alt: title }}
+    {% elsif icon != blank %}
+      {{ icon | image_url: width: 120 | image_tag: loading: 'lazy', alt: title }}
+    {% endif %}
+  </div>
+
+  <div class="ticket-card__content">
+    <h3 class="ticket-card__title">{{ title }}</h3>
+    {% if description != blank %}
+      <p class="ticket-card__description">{{ description }}</p>
+    {% endif %}
+  </div>
+
+  <div class="ticket-card__actions">
+    <div class="ticket-card__price-wrapper">
+      <span class="ticket-card__price-label">Price</span>
+      <span class="ticket-card__price">{{ variant.price | money }}</span>
+    </div>
+
+    <div class="ticket-card__quantity">
+      <button type="button" class="ticket-card__quantity-btn" data-action="decrease" aria-label="Decrease quantity">-</button>
+      <input type="number" class="ticket-card__quantity-input" value="0" min="0" data-variant-id="{{ variant.id }}" aria-label="Quantity">
+      <button type="button" class="ticket-card__quantity-btn" data-action="increase" aria-label="Increase quantity">+</button>
+    </div>
+
+    {% if note != blank %}
+      <p class="ticket-card__note">{{ note }}</p>
+    {% endif %}
+  </div>
+</ticket-card>
+
+{% javascript %}
+  class TicketCard extends HTMLElement {
+    constructor() {
+      super();
+      this.quantityInput = this.querySelector('.ticket-card__quantity-input');
+      this.decreaseBtn = this.querySelector('[data-action="decrease"]');
+      this.increaseBtn = this.querySelector('[data-action="increase"]');
+
+      this.decreaseBtn.addEventListener('click', () => this.updateQuantity(-1));
+      this.increaseBtn.addEventListener('click', () => this.updateQuantity(1));
+      this.quantityInput.addEventListener('change', () => this.validateQuantity());
+    }
+
+    updateQuantity(change) {
+      const currentValue = parseInt(this.quantityInput.value) || 0;
+      const newValue = Math.max(0, currentValue + change);
+      this.quantityInput.value = newValue;
+      this.dispatchChangeEvent();
+    }
+
+    validateQuantity() {
+      const value = parseInt(this.quantityInput.value) || 0;
+      this.quantityInput.value = Math.max(0, value);
+      this.dispatchChangeEvent();
+    }
+
+    dispatchChangeEvent() {
+      this.dispatchEvent(new CustomEvent('quantity-change', {
+        bubbles: true,
+        detail: {
+          variantId: this.quantityInput.dataset.variantId,
+          quantity: parseInt(this.quantityInput.value)
+        }
+      }));
+    }
+  }
+
+  customElements.define('ticket-card', TicketCard);
+{% endjavascript %}
+
+{% stylesheet %}
+  .ticket-card {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: var(--ticket-card-gap, 24px);
+    align-items: center;
+    padding: var(--ticket-card-padding, 32px);
+    border-radius: var(--ticket-card-radius, 8px);
+  }
+
+  .ticket-card__icon {
+    flex-shrink: 0;
+    width: var(--ticket-card-icon-size, 120px);
+    height: var(--ticket-card-icon-size, 120px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--ticket-card-icon-bg, #F5F1E8);
+    border-radius: 50%;
+  }
+
+  .ticket-card__icon img {
+    width: 60%;
+    height: auto;
+  }
+
+  .ticket-card__content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .ticket-card__title {
+    margin: 0;
+    font-size: var(--ticket-card-title-size, 28px);
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .ticket-card__description {
+    margin: 0;
+    font-size: var(--ticket-card-description-size, 14px);
+    line-height: 1.5;
+    opacity: 0.95;
+  }
+
+  .ticket-card__actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+  }
+
+  .ticket-card__price-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .ticket-card__price-label {
+    font-size: 14px;
+    opacity: 0.9;
+  }
+
+  .ticket-card__price {
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .ticket-card__quantity {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    background-color: var(--ticket-card-icon-bg, #F5F1E8);
+    border-radius: 0px;
+    border: 1px solid var(--color-border);
+    overflow: hidden;
+  }
+
+  .ticket-card__quantity-btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background-color: transparent;
+    color: var(--ticket-card-bg, #B94A48);
+    font-size: 20px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  .ticket-card__quantity-btn:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .ticket-card__quantity-input {
+    width: 60px;
+    height: 40px;
+    border: none;
+    background-color: var(--color-background);
+    color: var(--ticket-card-icon-bg, #F5F1E8);
+    text-align: center;
+    border-radius: 0%;
+    font-size: 16px;
+    font-weight: 700;
+    -moz-appearance: textfield;
+  }
+
+  .ticket-card__quantity-input::-webkit-outer-spin-button,
+  .ticket-card__quantity-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .ticket-card__note {
+    margin: 0;
+    font-size: 12px;
+    opacity: 0.9;
+    text-align: right;
+  }
+
+  @media (max-width: 768px) {
+    .ticket-card {
+      grid-template-columns: 1fr;
+      gap: 20px;
+      padding: 24px;
+    }
+
+    .ticket-card__icon {
+      margin: 0 auto;
+    }
+
+    .ticket-card__content {
+      text-align: center;
+    }
+
+    .ticket-card__actions {
+      align-items: center;
+      width: 100%;
+    }
+
+    .ticket-card__price-wrapper {
+      align-items: center;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Ticket Card",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "icon",
+      "label": "Icon"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description"
+    },
+    {
+      "type": "text",
+      "id": "note",
+      "label": "Note",
+      "default": "Prices are Higher at the Door"
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "checkbox",
+      "id": "inherit_color_scheme",
+      "label": "t:settings.inherit_color_scheme",
+      "default": true
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1",
+      "visible_if": "{{ block.settings.inherit_color_scheme == false }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ticket Card"
+    }
+  ]
+}
+{% endschema %}

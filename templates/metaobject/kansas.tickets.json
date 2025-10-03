@@ -97,9 +97,130 @@
         "padding-block-start": 0,
         "padding-block-end": 0
       }
+    },
+    "tickets_KeD38U": {
+      "type": "tickets",
+      "blocks": {
+        "group_UY6aqn": {
+          "type": "group",
+          "name": "t:names.group",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 12,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "inherit_color_scheme": false,
+            "color_scheme": "scheme-4",
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 10,
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "link": "",
+            "open_in_new_tab": false,
+            "placeholder": "",
+            "padding-block-start": 35,
+            "padding-block-end": 35,
+            "padding-inline-start": 42,
+            "padding-inline-end": 38
+          },
+          "blocks": {
+            "text_MaeLE9": {
+              "type": "text",
+              "name": "t:names.text",
+              "settings": {
+                "text": "<h3>Ticket and class help</h3><p>After ticket purchase you'll receive an e-mail with your QR ticket as well as instructions on how to register for classes (if applicable)</p><h3>other good info... </h3><p>If you have a Promo Code, you may use it on the next page<br/>Children 8 and younger are free to all events<br/>Many classes will have optional kits for purchase (see class description)<br/>Class availability not guaranteed. Sell-outs possible. Pre-registration guarantees your seat until 5 minutes prior to class beginning.<br/>Upgrade your ticket! Keep in mind, when upgrading your ticket you will need to re-register for your classes on your new ticket.<br/>Tickets purchased are final, non-refundable & non-transferable. Our system is not setup for transferring names on tickets or to other shows. So sorry about that. Thank you!</p>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": true,
+                "background_color": "#d01d24",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_MaeLE9"
+          ]
+        },
+        "ticket_type": {
+          "type": "_ticket-card",
+          "static": true,
+          "settings": {
+            "title": "",
+            "description": "",
+            "note": "Prices are Higher at the Door",
+            "inherit_color_scheme": false,
+            "color_scheme": "scheme-0ef3db66-e08e-45b6-9de2-86459fec689d"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "group_UY6aqn"
+      ],
+      "name": "Ticket Purchase",
+      "settings": {
+        "product": "kansas",
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "page-width",
+        "section_height": "small",
+        "section_height_custom": 50,
+        "color_scheme": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
     }
   },
   "order": [
-    "section_mEXn4i"
+    "section_mEXn4i",
+    "tickets_KeD38U"
   ]
 }
