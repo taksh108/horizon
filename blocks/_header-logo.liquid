@@ -10,6 +10,20 @@
     assign use_inverse_logo = true
   endif
 
+  assign logo = settings.logo
+  assign event_handle = metaobject.system.type | default: page.handle
+
+  assign city = metaobjects.city[event_handle]
+
+  if city.logo != blank
+    assign logo = city.logo
+  endif
+
+  if city != blank and city.logo != blank
+    assign partners = city.partners.value
+    assign top_partner = partners | first
+  endif
+
   if use_inverse_logo
     if settings.logo_inverse != blank
       assign inverse_logo = settings.logo_inverse
@@ -52,7 +66,7 @@
     data-testid="header-logo"
   >
     {% render 'image',
-      image: settings.logo,
+      image: logo,
       class: 'header-logo__image',
       height: settings.logo_height,
       text_fallback: shop.name,
@@ -75,6 +89,47 @@
     </span>
   {% endif %}
 </a>
+
+{% comment %}
+  Output Partner Logo if set
+  based on the top_partner.logo
+{% endcomment %}
+{% if top_partner.logo %}  
+  <a
+    {% if template.name == 'index' and block_settings.hide_logo_on_home_page %}
+      data-hidden-on-home-page
+    {% endif %}
+    href="{{ routes.root_url }}"
+    class="size-style spacing-style header-logo"
+    style="
+      {% render 'size-style', settings: block_settings %}
+      {% render 'spacing-style', settings: block_settings %}
+      --font-family: var(--font-body--family);
+      --font-style: var(--font-body--style);
+      --font-weight: 600;
+    "
+    {{ block.shopify_attributes }}
+  >
+    {% liquid
+      assign logo_width = settings.logo_height | times: settings.logo.aspect_ratio | ceil
+      assign logo_width_mobile = settings.logo_height_mobile | times: settings.logo.aspect_ratio | ceil
+      assign logo_style = '--header-logo-image-width: ' | append: logo_width | append: 'px;' | append: '--header-logo-image-width-mobile: ' | append: logo_width_mobile | append: 'px; --header-logo-image-height: ' | append: settings.logo_height | append: 'px; --header-logo-image-height-mobile: ' | append: settings.logo_height_mobile | append: 'px;'
+    %}
+
+    <span
+      class="header-logo__image-container header-logo__image-container--original"
+      data-testid="header-logo"
+    >
+      {% render 'image',
+        image: top_partner.logo,
+        class: 'header-logo__image',
+        height: settings.logo_height,
+        text_fallback: shop.name,
+        style: logo_style
+      %}
+    </span>
+  </a>
+{% endif %}
 
 {% stylesheet %}
   .header-logo {

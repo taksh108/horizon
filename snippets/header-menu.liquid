@@ -16,6 +16,13 @@
     assign color_scheme_classes = color_scheme_classes | append: ' color-scheme-matches-parent'
   endif
 
+
+  assign event_handle = metaobject.system.type | default: page.handle
+
+  assign menu = linklists[event_handle]
+  assign city = metaobjects.city[event_handle] 
+  assign menu = menu | default: block_settings.menu
+
   if block_settings.menu_style == 'featured_collections'
     assign ratio = block_settings.featured_collections_aspect_ratio
   elsif block_settings.menu_style == 'featured_products'
@@ -24,7 +31,7 @@
 %}
 
 {% capture children %}
-  {% for link in block_settings.menu.links %}
+  {% for link in menu.links %}
     <li
       role="presentation"
       class="menu-list__list-item"

@@ -8,6 +8,10 @@
 {% liquid
   assign block_settings = block.settings
   assign animation_speed = 200
+
+  assign event_handle = metaobject.system.type | default: page.handle
+  assign menu = linklists[event_handle]
+  assign menu = menu | default: block_settings.menu
 %}
 
 {% case variant %}
@@ -19,7 +23,7 @@
     >
       {% render 'header-drawer',
         class: 'header__drawer--mobile',
-        linklist: block_settings.menu,
+        linklist: menu,
         data_header_drawer_type: 'mobile-drawer'
       %}
     </div>
@@ -35,7 +39,7 @@
             class="menu-list__list list-unstyled"
             role="list"
           >
-            {% for link in block_settings.menu.links %}
+            {% for link in menu.links %}
               <li>
                 <a
                   href="{{ link.url }}"
