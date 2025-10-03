@@ -4285,10 +4285,12 @@ text-component {
 }
 
 
+slideshow-component,
 slideshow-slides {
-  border-radius: 28px;
+  border-radius: var(--slideshow-corner-radius, 0);
 }
 
 .template--index slideshow-slides {
   --font-heading--family: "milesregular";
 }
+

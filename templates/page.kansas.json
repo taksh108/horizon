@@ -168,7 +168,7 @@
         "color_scheme": "",
         "autoplay": false,
         "autoplay_speed": 4,
-        "corner_radius": 84,
+        "corner_radius": 28,
         "section_width": "page-width",
         "slide_height": "medium",
         "mobile_layout": "slideshow",
