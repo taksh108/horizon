@@ -11,7 +11,7 @@
   if title == blank and variant
     assign title = variant.title
   endif
-  assign description = block.settings.description
+  assign description = variant.metafields.custom.description | metafield_text | default: block.settings.description
   assign note = block.settings.note
 
   if block.settings.inherit_color_scheme

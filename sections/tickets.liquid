@@ -6,6 +6,7 @@
       {% content_for 'block', type: '_ticket-card', id: 'ticket_type' , variant: variant %}
     {% endfor %}
   </div>
+  {% content_for 'block', type: '_ticket-checkout', id: 'checkout-button' %}
   {% content_for 'blocks' %}
 {% endcapture %}
 

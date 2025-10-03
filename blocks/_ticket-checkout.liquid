@@ -1,0 +1,203 @@
+{% doc %}
+  Ticket checkout button for adding selected tickets to cart.
+
+  Usage:
+  {% content_for 'block', type: '_ticket-checkout' %}
+{% enddoc %}
+
+{% liquid
+  assign button_text = block.settings.button_text | default: 'Add to Cart'
+  assign button_style = block.settings.button_style
+%}
+
+<ticket-checkout {{ block.shopify_attributes }} class="ticket-checkout">
+  <button type="button" class="ticket-checkout__button button button--{{ button_style }}" data-checkout-button>
+    <span class="ticket-checkout__button-text">{{ button_text }}</span>
+    <span class="ticket-checkout__loader" hidden>
+      <span class="spinner"></span>
+    </span>
+  </button>
+  <p class="ticket-checkout__error" hidden></p>
+</ticket-checkout>
+
+{% javascript %}
+  class TicketCheckout extends HTMLElement {
+    constructor() {
+      super();
+      this.button = this.querySelector('[data-checkout-button]');
+      this.buttonText = this.querySelector('.ticket-checkout__button-text');
+      this.loader = this.querySelector('.ticket-checkout__loader');
+      this.errorElement = this.querySelector('.ticket-checkout__error');
+
+      this.button.addEventListener('click', () => this.handleCheckout());
+    }
+
+    async handleCheckout() {
+      const items = this.collectTicketItems();
+
+      if (items.length === 0) {
+        this.showError('Please select at least one ticket');
+        return;
+      }
+
+      this.setLoading(true);
+      this.hideError();
+
+      try {
+        const response = await fetch('/cart/add.js', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ items })
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to add items to cart');
+        }
+
+        const result = await response.json();
+
+        // Dispatch event for cart drawer to open
+        document.dispatchEvent(new CustomEvent('cart:refresh'));
+
+        // Open cart drawer
+        const cartDrawer = document.querySelector('cart-drawer');
+        if (cartDrawer) {
+          cartDrawer.open();
+        } else {
+          // Fallback to cart page if no drawer
+          window.location.href = '/cart';
+        }
+      } catch (error) {
+        console.error('Checkout error:', error);
+        this.showError('Failed to add items to cart. Please try again.');
+      } finally {
+        this.setLoading(false);
+      }
+    }
+
+    collectTicketItems() {
+      const ticketCards = document.querySelectorAll('ticket-card');
+      const items = [];
+
+      ticketCards.forEach(card => {
+        const input = card.querySelector('.ticket-card__quantity-input');
+        const quantity = parseInt(input.value) || 0;
+        const variantId = input.dataset.variantId;
+
+        if (quantity > 0 && variantId) {
+          items.push({
+            id: variantId,
+            quantity: quantity
+          });
+        }
+      });
+
+      return items;
+    }
+
+    setLoading(loading) {
+      this.button.disabled = loading;
+      this.buttonText.hidden = loading;
+      this.loader.hidden = !loading;
+    }
+
+    showError(message) {
+      this.errorElement.textContent = message;
+      this.errorElement.hidden = false;
+    }
+
+    hideError() {
+      this.errorElement.hidden = true;
+    }
+  }
+
+  customElements.define('ticket-checkout', TicketCheckout);
+{% endjavascript %}
+
+{% stylesheet %}
+  .ticket-checkout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .ticket-checkout__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-width: 200px;
+    padding: 16px 32px;
+  }
+
+  .ticket-checkout__loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ticket-checkout__error {
+    margin: 0;
+    color: rgb(var(--color-error));
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid currentColor;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Ticket Checkout",
+  "settings": [
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Add to Cart"
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button Style",
+      "options": [
+        {
+          "value": "primary",
+          "label": "Primary"
+        },
+        {
+          "value": "secondary",
+          "label": "Secondary"
+        },
+        {
+          "value": "tertiary",
+          "label": "Tertiary"
+        }
+      ],
+      "default": "primary"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ticket Checkout"
+    }
+  ]
+}
+{% endschema %}
