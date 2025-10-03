@@ -17,6 +17,8 @@
   {{ block.shopify_attributes }}
   class="
     bento-grid-section
+    section
+    section--{{ block.settings.section_width | default: 'full-width' }}
     spacing-style
     gap-style
   "
@@ -310,6 +312,26 @@
       ],
       "default": "60cqw",
       "visible_if": "{{ block.settings.layout_type == 'carousel' or block.settings.carousel_on_mobile == true }}"
+    },
+    {
+      "type": "header",
+      "content": "Layout Width"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Width",
+      "options": [
+        {
+          "value": "page-width",
+          "label": "Page"
+        },
+        {
+          "value": "full-width",
+          "label": "Full"
+        }
+      ],
+      "default": "full-width"
     },
     {
       "type": "header",

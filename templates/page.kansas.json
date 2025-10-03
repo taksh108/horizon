@@ -291,9 +291,211 @@
     "section_Lz7Dym": {
       "type": "section",
       "blocks": {
-        "stats_AmDrGH": {
+        "stats_container_qhwDBq": {
+          "type": "_stats-container",
+          "name": "Statistics Container",
+          "settings": {
+            "mobile_carousel": true,
+            "floating": false,
+            "alternate_floating": true,
+            "vertical_shift": -50,
+            "width": 85,
+            "background_color": "#dc2626",
+            "text_color": "#ffffff",
+            "padding": 32,
+            "border_radius": 12,
+            "gap": 24
+          },
+          "blocks": {
+            "stat_item_XqapCK": {
+              "type": "_stat-item",
+              "settings": {
+                "number": "+10K",
+                "label": "Visitors",
+                "number_font": "heading",
+                "label_font": "body",
+                "number_color": "",
+                "label_color": "",
+                "number_size": 3,
+                "label_size": 1
+              },
+              "blocks": {}
+            },
+            "stat_item_hgYqmj": {
+              "type": "_stat-item",
+              "settings": {
+                "number": "+30",
+                "label": "Classes",
+                "number_font": "heading",
+                "label_font": "body",
+                "number_color": "",
+                "label_color": "",
+                "number_size": 3,
+                "label_size": 1
+              },
+              "blocks": {}
+            },
+            "stat_item_4abUgx": {
+              "type": "_stat-item",
+              "settings": {
+                "number": "221",
+                "label": "Exhibitors",
+                "number_font": "heading",
+                "label_font": "body",
+                "number_color": "",
+                "label_color": "",
+                "number_size": 3,
+                "label_size": 1
+              },
+              "blocks": {}
+            },
+            "stat_item_F8EMN6": {
+              "type": "_stat-item",
+              "settings": {
+                "number": "9K",
+                "label": "Exhibitors",
+                "number_font": "heading",
+                "label_font": "body",
+                "number_color": "",
+                "label_color": "",
+                "number_size": 3,
+                "label_size": 1
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "stat_item_XqapCK",
+            "stat_item_hgYqmj",
+            "stat_item_4abUgx",
+            "stat_item_F8EMN6"
+          ]
+        }
+      },
+      "block_order": [
+        "stats_container_qhwDBq"
+      ],
+      "custom_css": [
+        ".section--page-width {overflow-x: hidden;}",
+        "marquee-component {max-width: 120vw; margin-bottom: -3rem; width: 100vw;}"
+      ],
+      "name": "t:names.custom_section",
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 18,
+        "color_scheme": "scheme-1",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "section_rTnhkc": {
+      "type": "section",
+      "blocks": {
+        "stats_container_CQ6gAV": {
+          "type": "_stats-container",
+          "name": "Statistics Container",
+          "disabled": true,
+          "settings": {
+            "mobile_carousel": true,
+            "floating": true,
+            "alternate_floating": false,
+            "vertical_shift": -50,
+            "width": 100,
+            "background_color": "#dc2626",
+            "text_color": "#ffffff",
+            "padding": 32,
+            "border_radius": 12,
+            "gap": 24
+          },
+          "blocks": {
+            "stat_item_A8xWRg": {
+              "type": "_stat-item",
+              "settings": {
+                "number": "+10K",
+                "label": "Visitors",
+                "number_font": "heading",
+                "label_font": "body",
+                "number_color": "",
+                "label_color": "",
+                "number_size": 3,
+                "label_size": 1
+              },
+              "blocks": {}
+            },
+            "stat_item_AyJgaD": {
+              "type": "_stat-item",
+              "settings": {
+                "number": "+30",
+                "label": "Classes",
+                "number_font": "heading",
+                "label_font": "body",
+                "number_color": "",
+                "label_color": "",
+                "number_size": 3,
+                "label_size": 1
+              },
+              "blocks": {}
+            },
+            "stat_item_UdxAnM": {
+              "type": "_stat-item",
+              "settings": {
+                "number": "221",
+                "label": "Exhibitors",
+                "number_font": "heading",
+                "label_font": "body",
+                "number_color": "",
+                "label_color": "",
+                "number_size": 3,
+                "label_size": 1
+              },
+              "blocks": {}
+            },
+            "stat_item_fzYXNf": {
+              "type": "_stat-item",
+              "settings": {
+                "number": "9K",
+                "label": "Exhibitors",
+                "number_font": "heading",
+                "label_font": "body",
+                "number_color": "",
+                "label_color": "",
+                "number_size": 3,
+                "label_size": 1
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "stat_item_A8xWRg",
+            "stat_item_AyJgaD",
+            "stat_item_UdxAnM",
+            "stat_item_fzYXNf"
+          ]
+        },
+        "stats_QQDaAE": {
           "type": "stats",
           "name": "Statistics Banner",
+          "disabled": true,
           "settings": {
             "stat_1_number": "+10K",
             "stat_1_label": "Visitors",
@@ -316,11 +518,11 @@
           },
           "blocks": {}
         },
-        "text_iKRjnQ": {
+        "text_mRDfKn": {
           "type": "text",
           "name": "t:names.heading",
           "settings": {
-            "text": "<h2>Choose Your City</h2>",
+            "text": "<h2>Pinners teaches 108 great classes such as</h2>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
@@ -342,7 +544,7 @@
           },
           "blocks": {}
         },
-        "text_GykJk7": {
+        "text_zmAx8M": {
           "type": "text",
           "name": "t:names.text",
           "settings": {
@@ -368,7 +570,7 @@
           },
           "blocks": {}
         },
-        "bento": {
+        "bento_grid_WxMQkM": {
           "type": "_bento-grid",
           "name": "Bento Grid",
           "settings": {
@@ -378,9 +580,10 @@
             "title_size": 3,
             "layout_type": "grid",
             "carousel_on_mobile": false,
-            "columns": 3,
+            "columns": 4,
             "mobile_columns": "2",
             "mobile_card_size": "60cqw",
+            "section_width": "medium",
             "columns_gap": 16,
             "bento_gap": 16,
             "rows_gap": 16,
@@ -389,150 +592,200 @@
             "icons_shape": "circle"
           },
           "blocks": {
-            "grid_image_MTJKx7": {
+            "grid_image_DUKzWa": {
               "type": "_grid-image",
               "name": "Grid Image",
               "settings": {
-                "image": "shopify://shop_images/Arizona.png",
+                "image": "shopify://shop_images/image_3.jpg",
                 "overlay_color": "#000000",
                 "overlay_opacity": 10,
                 "gradient_direction": "to bottom",
                 "horizontal_alignment": "center",
                 "vertical_alignment": "end",
-                "title": "Arizona",
+                "title": "Beauty & Fashion",
                 "title_font": "body",
                 "title_color": "",
-                "title_size": 2,
-                "subtitle": "Dates",
+                "title_size": 1,
+                "subtitle": "",
                 "subtitle_font": "body",
                 "subtitle_color": "",
                 "subtitle_size": 1,
-                "button_label": "Go to Event",
+                "button_label": "",
                 "button_link": "shopify://collections/frontpage",
                 "button_text_color": "",
                 "button_hover_bg": "#ffffff"
               },
               "blocks": {}
             },
-            "grid_image_bD3n9R": {
+            "grid_image_PtgXUg": {
               "type": "_grid-image",
               "name": "Grid Image",
               "settings": {
-                "image": "shopify://shop_images/Colorado.png",
+                "image": "shopify://shop_images/Rectangle_17.jpg",
                 "overlay_color": "#000000",
                 "overlay_opacity": 10,
                 "gradient_direction": "to bottom",
                 "horizontal_alignment": "center",
                 "vertical_alignment": "end",
-                "title": "Colorado",
+                "title": "Food Arts",
                 "title_font": "body",
                 "title_color": "",
-                "title_size": 2,
-                "subtitle": "Dates",
+                "title_size": 1,
+                "subtitle": "",
                 "subtitle_font": "body",
                 "subtitle_color": "",
                 "subtitle_size": 1,
-                "button_label": "Go to Event",
+                "button_label": "",
                 "button_link": "shopify://collections/frontpage",
                 "button_text_color": "",
                 "button_hover_bg": "#ffffff"
               },
               "blocks": {}
             },
-            "grid_image_KHCWeR": {
+            "grid_image_4GybyW": {
               "type": "_grid-image",
               "name": "Grid Image",
               "settings": {
-                "image": "shopify://shop_images/Kansas.png",
+                "image": "shopify://shop_images/Rectangle_18.jpg",
                 "overlay_color": "#000000",
                 "overlay_opacity": 10,
                 "gradient_direction": "to bottom",
                 "horizontal_alignment": "center",
                 "vertical_alignment": "end",
-                "title": "Kansas",
+                "title": "Party Planning",
                 "title_font": "body",
                 "title_color": "",
-                "title_size": 2,
-                "subtitle": "Dates",
+                "title_size": 1,
+                "subtitle": "",
                 "subtitle_font": "body",
                 "subtitle_color": "",
                 "subtitle_size": 1,
-                "button_label": "Go to Event",
+                "button_label": "",
                 "button_link": "shopify://collections/frontpage",
                 "button_text_color": "",
                 "button_hover_bg": "#ffffff"
               },
               "blocks": {}
             },
-            "grid_image_gh49ae": {
+            "grid_image_QF3gnM": {
               "type": "_grid-image",
               "name": "Grid Image",
               "settings": {
-                "image": "shopify://shop_images/STGeorge.png",
+                "image": "shopify://shop_images/Rectangle_19.jpg",
                 "overlay_color": "#000000",
                 "overlay_opacity": 10,
                 "gradient_direction": "to bottom",
                 "horizontal_alignment": "center",
                 "vertical_alignment": "end",
-                "title": "St. George",
+                "title": "DIY & Crafts",
                 "title_font": "body",
                 "title_color": "",
-                "title_size": 2,
-                "subtitle": "Dates",
+                "title_size": 1,
+                "subtitle": "",
                 "subtitle_font": "body",
                 "subtitle_color": "",
                 "subtitle_size": 1,
-                "button_label": "Go to Event",
+                "button_label": "",
                 "button_link": "shopify://collections/frontpage",
                 "button_text_color": "",
                 "button_hover_bg": "#ffffff"
               },
               "blocks": {}
             },
-            "grid_image_TepQd6": {
+            "grid_image_cth8wc": {
               "type": "_grid-image",
               "name": "Grid Image",
               "settings": {
-                "image": "shopify://shop_images/Texas.png",
+                "image": "shopify://shop_images/image_4.jpg",
                 "overlay_color": "#000000",
                 "overlay_opacity": 10,
                 "gradient_direction": "to bottom",
                 "horizontal_alignment": "center",
                 "vertical_alignment": "end",
-                "title": "Texas",
+                "title": "Holiday Home",
                 "title_font": "body",
                 "title_color": "",
-                "title_size": 2,
-                "subtitle": "Dates",
+                "title_size": 1,
+                "subtitle": "",
                 "subtitle_font": "body",
                 "subtitle_color": "",
                 "subtitle_size": 1,
-                "button_label": "Go to Event",
+                "button_label": "",
                 "button_link": "shopify://collections/frontpage",
                 "button_text_color": "",
                 "button_hover_bg": "#ffffff"
               },
               "blocks": {}
             },
-            "grid_image_Ln3MaV": {
+            "grid_image_KFqeQ3": {
               "type": "_grid-image",
               "name": "Grid Image",
               "settings": {
-                "image": "shopify://shop_images/Utah.png",
+                "image": "shopify://shop_images/Rectangle_20.jpg",
                 "overlay_color": "#000000",
                 "overlay_opacity": 10,
                 "gradient_direction": "to bottom",
                 "horizontal_alignment": "center",
                 "vertical_alignment": "end",
-                "title": "Utah",
+                "title": "DIY Home Decor",
                 "title_font": "body",
                 "title_color": "",
-                "title_size": 2,
-                "subtitle": "Dates",
+                "title_size": 1,
+                "subtitle": "",
                 "subtitle_font": "body",
                 "subtitle_color": "",
                 "subtitle_size": 1,
-                "button_label": "Go to Event",
+                "button_label": "",
+                "button_link": "shopify://collections/frontpage",
+                "button_text_color": "",
+                "button_hover_bg": "#ffffff"
+              },
+              "blocks": {}
+            },
+            "grid_image_CKcUkB": {
+              "type": "_grid-image",
+              "name": "Grid Image",
+              "settings": {
+                "image": "shopify://shop_images/Rectangle_22.jpg",
+                "overlay_color": "#000000",
+                "overlay_opacity": 10,
+                "gradient_direction": "to bottom",
+                "horizontal_alignment": "center",
+                "vertical_alignment": "end",
+                "title": "Quilting and Sewing",
+                "title_font": "body",
+                "title_color": "",
+                "title_size": 1,
+                "subtitle": "",
+                "subtitle_font": "body",
+                "subtitle_color": "",
+                "subtitle_size": 1,
+                "button_label": "",
+                "button_link": "shopify://collections/frontpage",
+                "button_text_color": "",
+                "button_hover_bg": "#ffffff"
+              },
+              "blocks": {}
+            },
+            "grid_image_VjXjAU": {
+              "type": "_grid-image",
+              "name": "Grid Image",
+              "settings": {
+                "image": "shopify://shop_images/Rectangle_20.jpg",
+                "overlay_color": "#000000",
+                "overlay_opacity": 10,
+                "gradient_direction": "to bottom",
+                "horizontal_alignment": "center",
+                "vertical_alignment": "end",
+                "title": "Watercolor",
+                "title_font": "body",
+                "title_color": "",
+                "title_size": 1,
+                "subtitle": "",
+                "subtitle_font": "body",
+                "subtitle_color": "",
+                "subtitle_size": 1,
+                "button_label": "",
                 "button_link": "shopify://collections/frontpage",
                 "button_text_color": "",
                 "button_hover_bg": "#ffffff"
@@ -541,15 +794,17 @@
             }
           },
           "block_order": [
-            "grid_image_MTJKx7",
-            "grid_image_bD3n9R",
-            "grid_image_KHCWeR",
-            "grid_image_gh49ae",
-            "grid_image_TepQd6",
-            "grid_image_Ln3MaV"
+            "grid_image_DUKzWa",
+            "grid_image_PtgXUg",
+            "grid_image_4GybyW",
+            "grid_image_QF3gnM",
+            "grid_image_cth8wc",
+            "grid_image_KFqeQ3",
+            "grid_image_CKcUkB",
+            "grid_image_VjXjAU"
           ]
         },
-        "divider_D4Cqip": {
+        "divider_D9xAUg": {
           "type": "_divider",
           "name": "t:names.divider",
           "settings": {
@@ -561,7 +816,7 @@
           },
           "blocks": {}
         },
-        "marquee_MQM3Um": {
+        "marquee_F4nU9y": {
           "type": "_marquee",
           "name": "t:names.marquee",
           "settings": {
@@ -575,7 +830,7 @@
             "gap_between_elements": 24
           },
           "blocks": {
-            "icon_dHqqNm": {
+            "icon_KGDF33": {
               "type": "icon",
               "name": "t:names.icon",
               "settings": {
@@ -587,7 +842,7 @@
               },
               "blocks": {}
             },
-            "icon_k7RfiQ": {
+            "icon_kqHEjq": {
               "type": "icon",
               "name": "t:names.icon",
               "settings": {
@@ -599,7 +854,7 @@
               },
               "blocks": {}
             },
-            "icon_ygQ7pL": {
+            "icon_dnciRd": {
               "type": "icon",
               "name": "t:names.icon",
               "settings": {
@@ -613,12 +868,12 @@
             }
           },
           "block_order": [
-            "icon_dHqqNm",
-            "icon_k7RfiQ",
-            "icon_ygQ7pL"
+            "icon_KGDF33",
+            "icon_kqHEjq",
+            "icon_dnciRd"
           ]
         },
-        "custom_liquid_T3VyGP": {
+        "custom_liquid_Xib8Tt": {
           "type": "custom-liquid",
           "name": "t:names.custom_liquid",
           "settings": {
@@ -628,13 +883,14 @@
         }
       },
       "block_order": [
-        "stats_AmDrGH",
-        "text_iKRjnQ",
-        "text_GykJk7",
-        "bento",
-        "divider_D4Cqip",
-        "marquee_MQM3Um",
-        "custom_liquid_T3VyGP"
+        "stats_container_CQ6gAV",
+        "stats_QQDaAE",
+        "text_mRDfKn",
+        "text_zmAx8M",
+        "bento_grid_WxMQkM",
+        "divider_D9xAUg",
+        "marquee_F4nU9y",
+        "custom_liquid_Xib8Tt"
       ],
       "custom_css": [
         ".section--page-width {overflow-x: hidden;}",
@@ -665,7 +921,7 @@
         "overlay_color": "#00000026",
         "overlay_style": "solid",
         "gradient_direction": "to top",
-        "padding-block-start": 48,
+        "padding-block-start": 100,
         "padding-block-end": 0
       }
     },
@@ -735,6 +991,7 @@
     "media_with_content_kYcRmi",
     "divider_J8KJDe",
     "section_Lz7Dym",
+    "section_rTnhkc",
     "section_khbMfd"
   ]
 }

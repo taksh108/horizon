@@ -23,7 +23,7 @@
     style="
       {% if block.settings.floating == true %}
         position: absolute;
-        translate: 0 -50%;
+        translate: 0 {{ block.settings.vertical_shift | minus: 50 }}%;
       {% endif %}
     "
   >
@@ -89,6 +89,20 @@
   </div>
 </div>
 
+{% if block.settings.alternate_floating %}
+  <style>
+    #shopify-section-{{ section.id }} {
+      position: absolute;
+      width: 100%;
+      z-index: 1;
+      translate: 0 -50%;
+    }
+    
+  #shopify-section-{{ section.id }} .section-background {
+    display: none;
+  }
+  </style>
+{% endif %}
 {% stylesheet %}
   .stats-outer {
     width: 100%;
@@ -110,7 +124,7 @@
   .stats-container--desktop {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: var(--stats-gap);
     align-items: center;
     text-align: center;
@@ -187,6 +201,7 @@
 {% schema %}
 {
   "name": "Statistics Container",
+  "tag": null,
   "settings": [
     {
       "type": "header",
@@ -209,6 +224,23 @@
       "label": "Floating",
       "default": true,
       "info": "Position the stats banner as a floating overlay"
+    },
+    {
+      "type": "checkbox",
+      "id": "alternate_floating",
+      "label": "Alternate Floating (for use in hero sections)",
+      "default": false,
+      "info": "Use this option if placing the stats container in a section by itself to avoid conflicts with other elements"
+    },
+    {
+      "type": "range",
+      "id": "vertical_shift",
+      "label": "Vertical Shift",
+      "min": -50,
+      "max": 50,
+      "step": 1,
+      "unit": "%",
+      "default": 0
     },
     {
       "type": "range",
