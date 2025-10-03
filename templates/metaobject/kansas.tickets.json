@@ -183,6 +183,15 @@
             "color_scheme": "scheme-0ef3db66-e08e-45b6-9de2-86459fec689d"
           },
           "blocks": {}
+        },
+        "checkout-button": {
+          "type": "_ticket-checkout",
+          "static": true,
+          "settings": {
+            "button_text": "Add to Cart",
+            "button_style": "secondary"
+          },
+          "blocks": {}
         }
       },
       "block_order": [

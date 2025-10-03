@@ -53,25 +53,27 @@
         });
 
         if (!response.ok) {
-          throw new Error('Failed to add items to cart');
+          console.log('Response not ok:', response);
+          const errorData = await response.json();
+          throw new Error(errorData.message || 'Failed to add items to cart');
         }
 
         const result = await response.json();
 
-        // Dispatch event for cart drawer to open
-        document.dispatchEvent(new CustomEvent('cart:refresh'));
-
-        // Open cart drawer
-        const cartDrawer = document.querySelector('cart-drawer');
-        if (cartDrawer) {
-          cartDrawer.open();
-        } else {
-          // Fallback to cart page if no drawer
-          window.location.href = '/cart';
-        }
+        // Dispatch CartAddEvent to trigger cart drawer to open
+        document.dispatchEvent(new CustomEvent('cart:update', {
+          bubbles: true,
+          detail: {
+            resource: result,
+            sourceId: this.id,
+            data: {
+              source: 'ticket-checkout'
+            }
+          }
+        }));
       } catch (error) {
         console.error('Checkout error:', error);
-        this.showError('Failed to add items to cart. Please try again.');
+        this.showError(error || 'Failed to add items to cart. Please try again.');
       } finally {
         this.setLoading(false);
       }
@@ -106,6 +108,10 @@
     showError(message) {
       this.errorElement.textContent = message;
       this.errorElement.hidden = false;
+
+      setTimeout(() => {
+        this.hideError();
+      }, 5000);
     }
 
     hideError() {
@@ -123,6 +129,10 @@
     align-items: center;
     gap: 12px;
     width: 100%;
+    position: fixed;
+    width: 100%;
+    bottom: 1rem;
+    z-index: 100;
   }
 
   .ticket-checkout__button {
@@ -149,10 +159,17 @@
   }
 
   .ticket-checkout__error {
-    margin: 0;
-    color: rgb(var(--color-error));
-    font-size: 14px;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    position: fixed;
+    width: auto;
+    bottom: 1rem;
+    z-index: 100;
+    margin: auto;
+    left: 50%;
+    transform: translate(-50%, 0%);
   }
 
   .ticket-checkout__error[hidden] {

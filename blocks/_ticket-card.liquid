@@ -45,7 +45,21 @@
 
     <div class="ticket-card__quantity">
       <button type="button" class="ticket-card__quantity-btn" data-action="decrease" aria-label="Decrease quantity">-</button>
-      <input type="number" class="ticket-card__quantity-input" value="0" min="0" data-variant-id="{{ variant.id }}" aria-label="Quantity">
+      <input
+        type="number"
+        class="ticket-card__quantity-input"
+        value="0"
+        min="0"
+        {% if variant.inventory_management and variant.inventory_policy == 'deny' %}
+          max="{{ variant.inventory_quantity }}"
+          data-max-quantity="{{ variant.inventory_quantity }}"
+        {% endif %}
+        data-variant-id="{{ variant.id }}"
+        data-inventory-managed="{{ variant.inventory_management | default: false }}"
+        data-inventory-policy="{{ variant.inventory_policy | default: 'continue' }}"
+        data-inventory-quantity="{{ variant.inventory_quantity | default: 0 }}"
+        aria-label="Quantity"
+      >
       <button type="button" class="ticket-card__quantity-btn" data-action="increase" aria-label="Increase quantity">+</button>
     </div>
 
@@ -66,19 +80,66 @@
       this.decreaseBtn.addEventListener('click', () => this.updateQuantity(-1));
       this.increaseBtn.addEventListener('click', () => this.updateQuantity(1));
       this.quantityInput.addEventListener('change', () => this.validateQuantity());
+
+      // Initialize button states
+      this.updateButtonStates();
     }
 
     updateQuantity(change) {
       const currentValue = parseInt(this.quantityInput.value) || 0;
-      const newValue = Math.max(0, currentValue + change);
+      let newValue = Math.max(0, currentValue + change);
+
+      // Check inventory limits
+      const maxQuantity = this.getMaxQuantity();
+      if (maxQuantity !== null) {
+        newValue = Math.min(newValue, maxQuantity);
+      }
+
       this.quantityInput.value = newValue;
+      this.updateButtonStates();
       this.dispatchChangeEvent();
     }
 
     validateQuantity() {
-      const value = parseInt(this.quantityInput.value) || 0;
-      this.quantityInput.value = Math.max(0, value);
+      let value = parseInt(this.quantityInput.value) || 0;
+      value = Math.max(0, value);
+
+      // Check inventory limits
+      const maxQuantity = this.getMaxQuantity();
+      if (maxQuantity !== null) {
+        value = Math.min(value, maxQuantity);
+      }
+
+      this.quantityInput.value = value;
+      this.updateButtonStates();
       this.dispatchChangeEvent();
+    }
+
+    getMaxQuantity() {
+      const inventoryManaged = this.quantityInput.dataset.inventoryManaged === 'true';
+      const inventoryPolicy = this.quantityInput.dataset.inventoryPolicy;
+      const inventoryQuantity = parseInt(this.quantityInput.dataset.inventoryQuantity) || 0;
+
+      if (inventoryManaged && inventoryPolicy === 'deny') {
+        return Math.max(0, inventoryQuantity);
+      }
+
+      return null;
+    }
+
+    updateButtonStates() {
+      const currentValue = parseInt(this.quantityInput.value) || 0;
+      const maxQuantity = this.getMaxQuantity();
+
+      // Disable decrease button if at 0
+      this.decreaseBtn.disabled = currentValue <= 0;
+
+      // Disable increase button if at max inventory
+      if (maxQuantity !== null) {
+        this.increaseBtn.disabled = currentValue >= maxQuantity;
+      } else {
+        this.increaseBtn.disabled = false;
+      }
     }
 
     dispatchChangeEvent() {
@@ -189,8 +250,13 @@
     transition: background-color 0.2s;
   }
 
-  .ticket-card__quantity-btn:hover {
+  .ticket-card__quantity-btn:hover:not(:disabled) {
     background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .ticket-card__quantity-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 
   .ticket-card__quantity-input {
