@@ -4283,3 +4283,12 @@ text-component {
     font-size: max(1rem, 100%);
   }
 }
+
+
+slideshow-slides {
+  border-radius: 28px;
+}
+
+.template--index slideshow-slides {
+  --font-heading--family: "milesregular";
+}

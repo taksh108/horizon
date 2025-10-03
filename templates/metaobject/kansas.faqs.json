@@ -9,17 +9,146 @@
  */
 {
   "sections": {
-    "hero_fFNVEj": {
-      "type": "hero",
+    "slideshow_nt4q6e": {
+      "type": "slideshow",
       "blocks": {
-        "text_bUdra4": {
-          "type": "text",
+        "slide_tqTKU6": {
+          "type": "_slide",
           "settings": {
-            "text": "<h1>New arrivals</h1>",
+            "media_type_1": "image",
+            "image_1": "shopify://shop_images/Group_15.jpg",
+            "mobile_media_type": "same",
+            "horizontal_alignment_mobile": "flex-start",
+            "vertical_alignment_mobile": "center",
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "center",
+            "vertical_alignment_flex_direction_column": "flex-end",
+            "gap": 12,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "group_abH93y": {
+              "type": "group",
+              "settings": {
+                "content_direction": "column",
+                "vertical_on_mobile": true,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "center",
+                "align_baseline": false,
+                "horizontal_alignment_flex_direction_column": "center",
+                "vertical_alignment_flex_direction_column": "flex-end",
+                "gap": 12,
+                "width": "custom",
+                "custom_width": 50,
+                "width_mobile": "custom",
+                "custom_width_mobile": 85,
+                "height": "fit",
+                "custom_height": 100,
+                "inherit_color_scheme": false,
+                "color_scheme": "scheme-a03d6c36-b341-4c13-9648-9b3a346514c5",
+                "background_media": "none",
+                "video_position": "cover",
+                "background_image_position": "cover",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0,
+                "toggle_overlay": false,
+                "overlay_color": "#00000026",
+                "overlay_style": "solid",
+                "gradient_direction": "to top",
+                "link": "",
+                "open_in_new_tab": false,
+                "placeholder": "",
+                "padding-block-start": 48,
+                "padding-block-end": 48,
+                "padding-inline-start": 48,
+                "padding-inline-end": 48
+              },
+              "blocks": {
+                "text_mw9kGD": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>FAQ</p>",
+                    "width": "fit-content",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "h1",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_mw9kGD"
+              ]
+            }
+          },
+          "block_order": [
+            "group_abH93y"
+          ]
+        }
+      },
+      "block_order": [
+        "slide_tqTKU6"
+      ],
+      "custom_css": [
+        "h1 {font-family: var(--font-paragraph--family); --font-h1--family: var(--font-paragraph--family);}"
+      ],
+      "name": "Slideshow",
+      "settings": {
+        "icons_style": "arrows_large",
+        "slideshow_controls_style": "dots",
+        "color_scheme": "",
+        "autoplay": false,
+        "autoplay_speed": 4,
+        "corner_radius": 0,
+        "section_width": "page-width",
+        "slide_height": "medium",
+        "mobile_layout": "slideshow",
+        "mobile_slide_height": "medium",
+        "padding-block-start": 28,
+        "padding-block-end": 28
+      }
+    },
+    "section_faqs": {
+      "type": "section",
+      "blocks": {
+        "text_main_title": {
+          "type": "text",
+          "name": "t:names.heading",
+          "settings": {
+            "text": "<h2>Frequently Asked Questions</h2>",
             "width": "fit-content",
             "max_width": "narrow",
             "alignment": "left",
-            "type_preset": "h1",
+            "type_preset": "h2",
             "font": "var(--font-body--family)",
             "font_size": "1rem",
             "line_height": "normal",
@@ -37,14 +166,15 @@
           },
           "blocks": {}
         },
-        "text_rCA3qF": {
+        "text_classes_title": {
           "type": "text",
+          "name": "t:names.heading",
           "settings": {
-            "text": "<p>Made with care and unconditionally loved by our customers.</p>",
+            "text": "<h3>Classes:</h3>",
             "width": "fit-content",
             "max_width": "narrow",
             "alignment": "left",
-            "type_preset": "rte",
+            "type_preset": "h3",
             "font": "var(--font-body--family)",
             "font_size": "1rem",
             "line_height": "normal",
@@ -55,64 +185,696 @@
             "background": false,
             "background_color": "#00000026",
             "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 32,
+            "padding-block-start": 16,
+            "padding-block-end": 0,
             "padding-inline-start": 0,
             "padding-inline-end": 0
           },
           "blocks": {}
         },
-        "button_X4PVwM": {
-          "type": "button",
-          "name": "t:names.button",
+        "accordion_classes": {
+          "type": "accordion",
+          "name": "t:names.accordion",
           "settings": {
-            "label": "Shop Now",
-            "link": "shopify://collections/all",
-            "open_in_new_tab": false,
-            "style_class": "button",
+            "icon": "caret",
+            "dividers": true,
+            "type_preset": "h5",
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "accordion_row_classes_included": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "Do all tickets include classes?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_classes_included": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>A general admission ticket includes all the shopping and associated make-and-takes, but you'll need a class ticket (wristband) to attend classes.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_classes_included"
+              ]
+            },
+            "accordion_row_register_classes": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "How do I register for classes or update my schedule?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_register_classes": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>You can find instructions on how to register for classes in the confirmation email you received when you purchased your ticket, or on our website.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_register_classes"
+              ]
+            },
+            "accordion_row_standby": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "What if I don't get into a class I want?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_standby": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>We save seats in every classroom for standby attendees who were not able to pre-register. Arrive before the class begins to wait in the standby line and claim an available seat. Standby seats are first-come, first-served.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_standby"
+              ]
+            },
+            "accordion_row_register_before_event": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "Do I have to register for classes before the event?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_register_before_event": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>It is best to pre-register for classes. Each classroom has limited seating, and pre-registering holds your seat until five minutes before class begins. Within five minutes of the start time, seats may be released to standby attendees.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_register_before_event"
+              ]
+            },
+            "accordion_row_class_kit_fee": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "Do I have to pay the class kit fee?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_class_kit_fee": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Your Pinners ticket gets you into the classes, but materials for DIY projects may require purchasing a class kit from the presenter. Many classes do not have required kits, and some presenters provide kits free of charge.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_class_kit_fee"
+              ]
+            },
+            "accordion_row_purchase_kits": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "How do I purchase class kits?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_purchase_kits": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Purchase class kits from presenters during their classes or pre-purchase through GrowTix when you register. Look for the red \"Purchase Class Kit\" button next to your class to buy ahead. All kits are available inside the classroom on the day of the event.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_purchase_kits"
+              ]
+            }
+          },
+          "block_order": [
+            "accordion_row_classes_included",
+            "accordion_row_register_classes",
+            "accordion_row_standby",
+            "accordion_row_register_before_event",
+            "accordion_row_class_kit_fee",
+            "accordion_row_purchase_kits"
+          ]
+        },
+        "text_ticketing_title": {
+          "type": "text",
+          "name": "t:names.heading",
+          "settings": {
+            "text": "<h3>Ticketing:</h3>",
             "width": "fit-content",
-            "custom_width": 100,
-            "width_mobile": "fit-content",
-            "custom_width_mobile": 100
+            "max_width": "narrow",
+            "alignment": "left",
+            "type_preset": "h3",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 16,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
           },
           "blocks": {}
+        },
+        "accordion_ticketing": {
+          "type": "accordion",
+          "name": "t:names.accordion",
+          "settings": {
+            "icon": "caret",
+            "dividers": true,
+            "type_preset": "h5",
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "accordion_row_ticket_refund": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "What is the ticket refund policy?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_ticket_refund": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>All tickets and class kits are non-refundable. If you can no longer attend, you may gift your ticket to someone else, but Pinners Conference cannot transfer tickets. The ticket, classes, and kits remain under the original purchaser's name.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_ticket_refund"
+              ]
+            },
+            "accordion_row_discounts": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "Are there any discounts or promo codes?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_discounts": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>We send general admission discount codes to our email subscribers. Join the Pinners email club via the website pop-up to receive offers. Exhibitors and presenters also share promo codes on their sites and social media.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_discounts"
+              ]
+            },
+            "accordion_row_ticket_days": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "Which day can I use my ticket?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_ticket_days": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Single-day admission tickets are valid for either day of the show—you choose which day to attend. VIP tickets and two-day passes provide access on both days.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_ticket_days"
+              ]
+            }
+          },
+          "block_order": [
+            "accordion_row_ticket_refund",
+            "accordion_row_discounts",
+            "accordion_row_ticket_days"
+          ]
+        },
+        "text_at_the_show_title": {
+          "type": "text",
+          "name": "t:names.heading",
+          "settings": {
+            "text": "<h3>At the show:</h3>",
+            "width": "fit-content",
+            "max_width": "narrow",
+            "alignment": "left",
+            "type_preset": "h3",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 16,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "accordion_at_the_show": {
+          "type": "accordion",
+          "name": "t:names.accordion",
+          "settings": {
+            "icon": "caret",
+            "dividers": true,
+            "type_preset": "h5",
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "accordion_row_parking": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "Where should I park for the event?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_parking": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>There is ample parking at the Overland Park Convention Center, with the main lot on the north side. Parking in this lot is free.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_parking"
+              ]
+            },
+            "accordion_row_wait_in_line": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "Do I have to wait in line if I pre-purchased my ticket?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_wait_in_line": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Pre-purchasing your ticket lets you skip on-site purchasing, but you still need to pick up your wristband. Plan to arrive at least 30 minutes early if you are attending the first class of the day.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_wait_in_line"
+              ]
+            },
+            "accordion_row_hotels": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "Are there host hotels or discounts on rooms?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_hotels": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Yes, you can receive a Pinners discount on select hotel rooms. Find the latest information on our website under hotels.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_hotels"
+              ]
+            },
+            "accordion_row_asl": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "How do I request an ASL interpreter?",
+                "open_by_default": false,
+                "icon": "none",
+                "width": 20
+              },
+              "blocks": {
+                "text_asl": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Please email <a href=\"mailto:info@bennettevents.com\">info@bennettevents.com</a> at least one month before the event to request an ASL interpreter.</p>",
+                    "width": "100%",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "color": "var(--color-foreground)",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_asl"
+              ]
+            }
+          },
+          "block_order": [
+            "accordion_row_parking",
+            "accordion_row_wait_in_line",
+            "accordion_row_hotels",
+            "accordion_row_asl"
+          ]
         }
       },
       "block_order": [
-        "text_bUdra4",
-        "text_rCA3qF",
-        "button_X4PVwM"
+        "text_main_title",
+        "text_classes_title",
+        "accordion_classes",
+        "text_ticketing_title",
+        "accordion_ticketing",
+        "text_at_the_show_title",
+        "accordion_at_the_show"
       ],
-      "name": "t:names.hero",
+      "name": "t:names.faq_section",
       "settings": {
-        "media_type_1": "image",
-        "media_type_2": "image",
-        "link": "",
-        "open_in_new_tab": false,
         "content_direction": "column",
         "vertical_on_mobile": true,
         "horizontal_alignment": "flex-start",
         "vertical_alignment": "center",
         "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "center",
+        "horizontal_alignment_flex_direction_column": "flex-start",
         "vertical_alignment_flex_direction_column": "center",
-        "gap": 16,
+        "gap": 32,
         "section_width": "page-width",
-        "section_height": "large",
+        "section_height": "",
         "section_height_custom": 50,
-        "color_scheme": "scheme-5",
-        "toggle_overlay": true,
+        "color_scheme": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
         "overlay_color": "#00000026",
-        "overlay_style": "gradient",
+        "overlay_style": "solid",
         "gradient_direction": "to top",
-        "blurred_reflection": false,
-        "reflection_opacity": 75,
-        "padding-block-start": 40,
-        "padding-block-end": 40
+        "padding-block-start": 48,
+        "padding-block-end": 48
       }
     }
   },
   "order": [
-    "hero_fFNVEj"
+    "slideshow_nt4q6e",
+    "section_faqs"
   ]
 }

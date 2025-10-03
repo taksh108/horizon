@@ -1,5 +1,5 @@
 {% style %}
-
+{% if template.name == 'index' %}
   @font-face {
     font-family: "milesregular";
     src: url("{{ "miles-webfont.woff2" | asset_url }}")format("woff2"),
@@ -7,6 +7,7 @@
     font-weight: normal;
     font-style: normal;
   }
+{% endif %}
 
   {%- liquid
     assign primary_font_bold = settings.type_body_font | font_modify: 'weight', 'bold'
@@ -96,8 +97,7 @@
     --font-subheading--family: {{ settings.type_subheading_font.family }}, {{ settings.type_subheading_font.fallback_families }};
     --font-subheading--style: {{ settings.type_subheading_font.style }};
     --font-subheading--weight: {{ settings.type_subheading_font.weight }};
-    {% comment %}--font-heading--family: {{ settings.type_heading_font.family }}, {{ settings.type_heading_font.fallback_families }};{% endcomment %}
-    --font-heading--family: "milesregular";
+    --font-heading--family: {{ settings.type_heading_font.family }}, {{ settings.type_heading_font.fallback_families }};
     --font-heading--style: {{ settings.type_heading_font.style }};
     --font-heading--weight: {{ settings.type_heading_font.weight }};
     --font-accent--family: {{ settings.type_accent_font.family }}, {{ settings.type_accent_font.fallback_families }};
